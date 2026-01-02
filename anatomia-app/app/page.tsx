@@ -3,10 +3,13 @@
 import Link from 'next/link'
 import { useAppStore } from '@/lib/store'
 import { Card, Button, ProgressBar, Badge } from '@/components/ui'
+import { Footer } from '@/components'
 import { formatPercentage } from '@/lib/utils'
+import { calculateStudyStats } from '@/lib/storage'
 
 export default function Dashboard() {
   const { user, data, stats, progress, wrongCounts } = useAppStore()
+  const studyStats = calculateStudyStats()
 
   if (!data || !user) return null
 
@@ -44,6 +47,13 @@ export default function Dashboard() {
       title: 'Quiz por Tema',
       description: 'Elige un tema',
       color: 'from-green-500/20 to-emerald-500/20',
+    },
+    {
+      href: '/biblioteca',
+      icon: '📚',
+      title: 'Biblioteca',
+      description: '23 documentos',
+      color: 'from-amber-500/20 to-yellow-500/20',
     },
   ]
 
@@ -175,6 +185,40 @@ export default function Dashboard() {
         </Card>
       )}
 
+      {/* Study Progress */}
+      {studyStats.totalReviewed > 0 && (
+        <Card className="mb-6">
+          <h2 className="section-title flex items-center gap-2">
+            <span>📖</span> Progreso de Estudio
+          </h2>
+          <div className="grid grid-cols-4 gap-3 mb-4">
+            <div className="text-center p-3 bg-dark-700 rounded-xl">
+              <div className="text-2xl font-bold text-white">{studyStats.totalReviewed}</div>
+              <div className="text-xs text-gray-400">Revisadas</div>
+            </div>
+            <div className="text-center p-3 bg-correct/10 rounded-xl border border-correct/30">
+              <div className="text-2xl font-bold text-correct">{studyStats.seguro}</div>
+              <div className="text-xs text-gray-400">Seguras</div>
+            </div>
+            <div className="text-center p-3 bg-yellow-500/10 rounded-xl border border-yellow-500/30">
+              <div className="text-2xl font-bold text-yellow-400">{studyStats.duda}</div>
+              <div className="text-xs text-gray-400">Dudas</div>
+            </div>
+            <div className="text-center p-3 bg-incorrect/10 rounded-xl border border-incorrect/30">
+              <div className="text-2xl font-bold text-incorrect">{studyStats.noidea}</div>
+              <div className="text-xs text-gray-400">Sin idea</div>
+            </div>
+          </div>
+          <ProgressBar
+            value={studyStats.totalReviewed}
+            max={metadata.withoutAnswers}
+            showLabel
+            label={`${studyStats.totalReviewed}/${metadata.withoutAnswers} estudiadas`}
+            color="primary"
+          />
+        </Card>
+      )}
+
       {/* Data Info */}
       <Card variant="outlined" className="text-center">
         <p className="text-gray-400 text-sm">
@@ -183,6 +227,8 @@ export default function Dashboard() {
           para estudio
         </p>
       </Card>
+
+      <Footer />
     </div>
   )
 }

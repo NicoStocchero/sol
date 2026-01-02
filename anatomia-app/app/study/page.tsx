@@ -2,26 +2,39 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { useAppStore } from '@/lib/store'
-import { QuestionCard } from '@/components'
+import { StudyQuestionCard, StudyResults } from '@/components'
+import { Footer } from '@/components/Footer'
 import { Card, Button, Badge, ProgressBar } from '@/components/ui'
 import { shuffleArray, getQuestionsWithoutAnswers, filterByTema, filterBySource } from '@/lib/utils'
+import { getStudyProgress, calculateStudyStats } from '@/lib/storage'
 import type { Question } from '@/lib/types'
 
-type FilterType = 'all' | 'tema' | 'source'
+type FilterType = 'all' | 'tema' | 'source' | 'review'
 
 export default function StudyMode() {
-  const { data, userAnswers } = useAppStore()
+  const { data } = useAppStore()
   const [questions, setQuestions] = useState<Question[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [filterType, setFilterType] = useState<FilterType>('all')
   const [filterValue, setFilterValue] = useState<string>('')
   const [isStarted, setIsStarted] = useState(false)
+  const [isFinished, setIsFinished] = useState(false)
+  const [sessionStats, setSessionStats] = useState({ seguro: 0, duda: 0, noidea: 0, markedForReview: 0 })
 
   // Get questions without answers
   const studyQuestions = useMemo(() => {
     if (!data) return []
     return getQuestionsWithoutAnswers(data.questions)
   }, [data])
+
+  // Get existing study progress
+  const studyProgress = getStudyProgress()
+  const existingStats = calculateStudyStats()
+
+  // Get questions marked for review
+  const reviewQuestions = useMemo(() => {
+    return studyQuestions.filter(q => studyProgress[q.id]?.markedForReview)
+  }, [studyQuestions, studyProgress])
 
   // Apply filters
   useEffect(() => {
@@ -34,23 +47,35 @@ export default function StudyMode() {
     } else if (filterType === 'source' && filterValue) {
       const sourceName = data.metadata.sources.find(s => s.id === filterValue)?.name || ''
       filtered = filterBySource(studyQuestions, sourceName)
+    } else if (filterType === 'review') {
+      filtered = reviewQuestions
     }
 
     setQuestions(shuffleArray(filtered))
     setCurrentIndex(0)
-  }, [data, filterType, filterValue, studyQuestions])
+  }, [data, filterType, filterValue, studyQuestions, reviewQuestions])
 
   const currentQuestion = questions[currentIndex]
   const totalQuestions = questions.length
-  const answeredInSession = useMemo(() => {
-    return questions.filter(q => userAnswers[q.id] !== undefined).length
-  }, [questions, userAnswers])
 
   const handleNext = () => {
     if (currentIndex < totalQuestions - 1) {
       setCurrentIndex(prev => prev + 1)
     } else {
-      setIsStarted(false)
+      // Calculate session stats
+      const progress = getStudyProgress()
+      const sessionQuestionIds = questions.map(q => q.id)
+      const sessionEntries = sessionQuestionIds
+        .map(id => progress[id])
+        .filter(Boolean)
+
+      setSessionStats({
+        seguro: sessionEntries.filter(e => e.confidence === 'seguro').length,
+        duda: sessionEntries.filter(e => e.confidence === 'duda').length,
+        noidea: sessionEntries.filter(e => e.confidence === 'noidea').length,
+        markedForReview: sessionEntries.filter(e => e.markedForReview).length,
+      })
+      setIsFinished(true)
     }
   }
 
@@ -64,12 +89,42 @@ export default function StudyMode() {
     setQuestions(shuffleArray(questions))
     setCurrentIndex(0)
     setIsStarted(true)
+    setIsFinished(false)
+  }
+
+  const handleRetry = () => {
+    setIsFinished(false)
+    setIsStarted(false)
+  }
+
+  const handleViewMarked = () => {
+    setFilterType('review')
+    setIsFinished(false)
+    setIsStarted(false)
   }
 
   if (!data) {
     return (
       <div className="container-app">
         <p className="text-gray-400 text-center">Cargando...</p>
+      </div>
+    )
+  }
+
+  // Results screen
+  if (isFinished) {
+    return (
+      <div className="container-app">
+        <StudyResults
+          totalQuestions={totalQuestions}
+          seguro={sessionStats.seguro}
+          duda={sessionStats.duda}
+          noidea={sessionStats.noidea}
+          markedForReview={sessionStats.markedForReview}
+          onRetry={handleRetry}
+          onViewMarked={sessionStats.markedForReview > 0 ? handleViewMarked : undefined}
+        />
+        <Footer />
       </div>
     )
   }
@@ -97,14 +152,49 @@ export default function StudyMode() {
       <div className="container-app">
         <h1 className="page-title">📖 Modo Estudio</h1>
 
+        {/* Existing Progress */}
+        {existingStats.totalReviewed > 0 && (
+          <Card className="mb-6 bg-gradient-to-br from-primary-500/10 to-purple-500/10">
+            <h3 className="text-white font-semibold mb-3">Tu progreso de estudio</h3>
+            <div className="grid grid-cols-4 gap-2 text-center mb-3">
+              <div>
+                <div className="text-xl font-bold text-white">{existingStats.totalReviewed}</div>
+                <div className="text-xs text-gray-400">Revisadas</div>
+              </div>
+              <div>
+                <div className="text-xl font-bold text-correct">{existingStats.seguro}</div>
+                <div className="text-xs text-gray-400">Seguras</div>
+              </div>
+              <div>
+                <div className="text-xl font-bold text-yellow-400">{existingStats.duda}</div>
+                <div className="text-xs text-gray-400">Con dudas</div>
+              </div>
+              <div>
+                <div className="text-xl font-bold text-incorrect">{existingStats.noidea}</div>
+                <div className="text-xs text-gray-400">Sin idea</div>
+              </div>
+            </div>
+            {existingStats.markedForReview > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full"
+                onClick={() => setFilterType('review')}
+              >
+                📌 Ver {existingStats.markedForReview} marcadas para verificar
+              </Button>
+            )}
+          </Card>
+        )}
+
         <Card className="mb-6">
           <p className="text-gray-400 mb-4">
-            En este modo practicás con las {studyQuestions.length} preguntas que no tienen
-            respuesta verificada. Podés marcar cuál creés que es la correcta para referencia futura.
+            Practicá con las {studyQuestions.length} preguntas sin respuesta verificada.
+            Indicá tu nivel de confianza en cada respuesta.
           </p>
 
           {/* Filter by type */}
-          <div className="flex gap-2 mb-4">
+          <div className="flex flex-wrap gap-2 mb-4">
             <Button
               variant={filterType === 'all' ? 'primary' : 'outline'}
               size="sm"
@@ -129,6 +219,15 @@ export default function StudyMode() {
             >
               Por Fuente
             </Button>
+            {reviewQuestions.length > 0 && (
+              <Button
+                variant={filterType === 'review' ? 'primary' : 'outline'}
+                size="sm"
+                onClick={() => setFilterType('review')}
+              >
+                📌 Para verificar ({reviewQuestions.length})
+              </Button>
+            )}
           </div>
 
           {/* Tema selector */}
@@ -189,6 +288,8 @@ export default function StudyMode() {
             Comenzar Estudio ({questions.length} preguntas)
           </Button>
         </Card>
+
+        <Footer />
       </div>
     )
   }
@@ -201,7 +302,7 @@ export default function StudyMode() {
         <Button variant="ghost" size="sm" onClick={() => setIsStarted(false)}>
           ← Volver
         </Button>
-        <Badge>{answeredInSession} marcadas</Badge>
+        <Badge variant="info">{currentIndex + 1} / {totalQuestions}</Badge>
       </div>
 
       {/* Progress */}
@@ -214,11 +315,10 @@ export default function StudyMode() {
 
       {/* Question */}
       {currentQuestion && (
-        <QuestionCard
+        <StudyQuestionCard
           question={currentQuestion}
           questionNumber={currentIndex + 1}
           totalQuestions={totalQuestions}
-          mode="study"
           onNext={handleNext}
           onPrevious={currentIndex > 0 ? handlePrevious : undefined}
         />
