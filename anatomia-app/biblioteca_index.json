@@ -1,0 +1,2514 @@
+{
+  "metadata": {
+    "totalDocs": 23,
+    "unidades": [
+      "UD12-13",
+      "UD14",
+      "Histología",
+      "UD5",
+      "UD3",
+      "UD9-10",
+      "Examen",
+      "UD11",
+      "UD7",
+      "General",
+      "UD6",
+      "UD2",
+      "UD4",
+      "UD1",
+      "UD8"
+    ],
+    "tipos": [
+      "teoria",
+      "resumen",
+      "guia",
+      "indice"
+    ]
+  },
+  "documents": [
+    {
+      "id": "00_HISTOLOGIA_COMPLEMENTARIA",
+      "filename": "00_HISTOLOGIA_COMPLEMENTARIA.md",
+      "title": "Histología Complementaria",
+      "unidad": "Histología",
+      "tipo": "teoria",
+      "icon": "🔬",
+      "sections": [
+        {
+          "title": "🔬 HISTOLOGÍA COMPLEMENTARIA (Contenido que falta para 10/10)",
+          "level": 1
+        },
+        {
+          "title": "1.1 Osificación Intramembranosa (Huesos Planos)",
+          "level": 3
+        },
+        {
+          "title": "1.2 Osificación Endocondral (Huesos Largos)",
+          "level": 3
+        },
+        {
+          "title": "1.3 Células del Tejido Óseo",
+          "level": 3
+        },
+        {
+          "title": "2.1 Envolturas del Músculo Esquelético",
+          "level": 3
+        },
+        {
+          "title": "2.2 Estructura de la Fibra Muscular",
+          "level": 3
+        },
+        {
+          "title": "2.3 El Sarcómero (Unidad Funcional)",
+          "level": 3
+        },
+        {
+          "title": "2.4 Contracción Muscular (Modelo de Deslizamiento)",
+          "level": 3
+        },
+        {
+          "title": "2.5 Unión Neuromuscular (Placa Motora)",
+          "level": 3
+        },
+        {
+          "title": "3.1 Definición",
+          "level": 3
+        },
+        {
+          "title": "3.2 Componentes",
+          "level": 3
+        },
+        {
+          "title": "3.3 Sistema Renina-Angiotensina-Aldosterona",
+          "level": 3
+        },
+        {
+          "title": "3.4 Preguntas frecuentes de oral",
+          "level": 3
+        },
+        {
+          "title": "Si te preguntan sobre osificación:",
+          "level": 3
+        },
+        {
+          "title": "Si te preguntan sobre envolturas musculares:",
+          "level": 3
+        },
+        {
+          "title": "Si te preguntan sobre el sarcómero:",
+          "level": 3
+        },
+        {
+          "title": "Si te preguntan sobre aparato yuxtaglomerular:",
+          "level": 3
+        }
+      ],
+      "wordCount": 1120,
+      "readingTime": 5
+    },
+    {
+      "id": "00_MASTER_INDEX",
+      "filename": "00_MASTER_INDEX.md",
+      "title": "Índice General",
+      "unidad": "General",
+      "tipo": "indice",
+      "icon": "📚",
+      "sections": [
+        {
+          "title": "📚 MASTER INDEX — SOL_PACK ANATOMÍA 10/10 (v2.1)",
+          "level": 1
+        },
+        {
+          "title": "Lee primero: `CANONICOS/00_HISTOLOGIA_COMPLEMENTARIA.md`",
+          "level": 3
+        },
+        {
+          "title": "Para ESTUDIAR (usa CANONICOS/):",
+          "level": 3
+        },
+        {
+          "title": "📋 COBERTURA VERIFICADA POR UD",
+          "level": 2
+        },
+        {
+          "title": "Por tema específico:",
+          "level": 3
+        },
+        {
+          "title": "Histología (lo que suelen preguntar):",
+          "level": 3
+        },
+        {
+          "title": "Anatomía macro (siempre cae):",
+          "level": 3
+        },
+        {
+          "title": "💡 ESTRATEGIA DE ESTUDIO",
+          "level": 2
+        },
+        {
+          "title": "📊 ESTADÍSTICAS FINALES",
+          "level": 2
+        }
+      ],
+      "wordCount": 602,
+      "readingTime": 3
+    },
+    {
+      "id": "01_UD1_INTRODUCCION",
+      "filename": "01_UD1_INTRODUCCION.md",
+      "title": "Introducción a la Anatomía",
+      "unidad": "UD1",
+      "tipo": "teoria",
+      "icon": "📖",
+      "sections": [
+        {
+          "title": "UD1 - INTRODUCCIÓN A LA ANATOMÍA (anatomohistología)",
+          "level": 1
+        },
+        {
+          "title": "Índice",
+          "level": 2
+        },
+        {
+          "title": "1) Qué es Anatomía (y cómo se estudia)",
+          "level": 2
+        },
+        {
+          "title": "Ramas (las que conviene saber nombrar)",
+          "level": 3
+        },
+        {
+          "title": "Métodos de estudio (cómo te lo preguntan)",
+          "level": 3
+        },
+        {
+          "title": "2) Niveles de organización y tejidos (noción)",
+          "level": 2
+        },
+        {
+          "title": "3.1 Posición anatómica (definición de examen)",
+          "level": 3
+        },
+        {
+          "title": "3.2 Planos anatómicos",
+          "level": 3
+        },
+        {
+          "title": "3.3 Ejes (para movimientos)",
+          "level": 3
+        },
+        {
+          "title": "4.1 Relación (los de siempre)",
+          "level": 3
+        },
+        {
+          "title": "4.2 Lateralidad",
+          "level": 3
+        },
+        {
+          "title": "4.3 Términos específicos de mano y pie (te salvan en MS/MI)",
+          "level": 3
+        },
+        {
+          "title": "5) Movimientos básicos (vocabulario de examen)",
+          "level": 2
+        },
+        {
+          "title": "6) Cavidades corporales y serosas (noción)",
+          "level": 2
+        },
+        {
+          "title": "7) Imagenología (noción práctica)",
+          "level": 2
+        },
+        {
+          "title": "Checklist",
+          "level": 3
+        },
+        {
+          "title": "Preguntas típicas",
+          "level": 3
+        }
+      ],
+      "wordCount": 721,
+      "readingTime": 3
+    },
+    {
+      "id": "02_UD2_HUESOS",
+      "filename": "02_UD2_HUESOS.md",
+      "title": "Sistema Óseo (Completo)",
+      "unidad": "UD2",
+      "tipo": "teoria",
+      "icon": "🦴",
+      "sections": [
+        {
+          "title": "UD2 - OSTEOLOGÍA (Sistema Óseo)",
+          "level": 1
+        },
+        {
+          "title": "Índice de estudio (cómo te lo van a tomar)",
+          "level": 2
+        },
+        {
+          "title": "Cómo estudiar osteología (regla práctica)",
+          "level": 2
+        },
+        {
+          "title": "Checklist de cobertura (para no dejar huecos)",
+          "level": 2
+        },
+        {
+          "title": "Anexo rápido — Mano (para repasar en 10 minutos)",
+          "level": 2
+        },
+        {
+          "title": "Falanges (vocabulario de examen)",
+          "level": 3
+        },
+        {
+          "title": "Generalidades columna y tórax",
+          "level": 1
+        },
+        {
+          "title": "CARACTERISTICAS VERTEBRAS",
+          "level": 1
+        },
+        {
+          "title": "Hoja1",
+          "level": 2
+        },
+        {
+          "title": "Hoja2",
+          "level": 2
+        },
+        {
+          "title": "Hoja3",
+          "level": 2
+        },
+        {
+          "title": "Hoja1",
+          "level": 2
+        },
+        {
+          "title": "MIEMBRO INFERIOR",
+          "level": 2
+        }
+      ],
+      "wordCount": 29987,
+      "readingTime": 149
+    },
+    {
+      "id": "03_UD3_ARTICULACIONES",
+      "filename": "03_UD3_ARTICULACIONES.md",
+      "title": "Articulaciones",
+      "unidad": "UD3",
+      "tipo": "teoria",
+      "icon": "🔗",
+      "sections": [
+        {
+          "title": "UD3 — ARTROLOGÍA (Articulaciones)",
+          "level": 1
+        },
+        {
+          "title": "1) Concepto",
+          "level": 2
+        },
+        {
+          "title": "2.1 Según movilidad",
+          "level": 3
+        },
+        {
+          "title": "Recordatorio (diartrosis): cartílago articular",
+          "level": 4
+        },
+        {
+          "title": "2.2 Según el tejido interpuesto",
+          "level": 3
+        },
+        {
+          "title": "2.3 Tipos de articulaciones sinoviales (diartrosis) por forma",
+          "level": 3
+        },
+        {
+          "title": "3.1 Elementos esenciales",
+          "level": 3
+        },
+        {
+          "title": "3.2 Elementos accesorios (súper preguntables)",
+          "level": 3
+        },
+        {
+          "title": "4) Movimientos: planos y ejes (para describir bien)",
+          "level": 2
+        },
+        {
+          "title": "5.1 Columna y pelvis (general)",
+          "level": 3
+        },
+        {
+          "title": "5.2 Cintura escapular y miembro superior",
+          "level": 3
+        },
+        {
+          "title": "5.3 Pelvis y miembro inferior",
+          "level": 3
+        },
+        {
+          "title": "5.4 Articulación temporomandibular (ATM) — sale en el preguntero",
+          "level": 3
+        },
+        {
+          "title": "6) Mini-guía de respuestas rápidas (tipo oral)",
+          "level": 2
+        },
+        {
+          "title": "Rodilla: ligamentos cruzados (texto completo)",
+          "level": 4
+        }
+      ],
+      "wordCount": 1110,
+      "readingTime": 5
+    },
+    {
+      "id": "04B_UD5_TEJIDOS",
+      "filename": "04B_UD5_TEJIDOS.md",
+      "title": "Tejidos",
+      "unidad": "UD5",
+      "tipo": "teoria",
+      "icon": "🧫",
+      "sections": [
+        {
+          "title": "🔬 UD5 - TEJIDOS EPITELIAL Y CONECTIVO",
+          "level": 1
+        },
+        {
+          "title": "1.1 Generalidades",
+          "level": 3
+        },
+        {
+          "title": "1.2 Clasificación por Morfología Celular",
+          "level": 3
+        },
+        {
+          "title": "1.3 Clasificación por Número de Capas",
+          "level": 3
+        },
+        {
+          "title": "1.4 Funciones del Tejido Epitelial",
+          "level": 3
+        },
+        {
+          "title": "Glándulas Exocrinas",
+          "level": 4
+        },
+        {
+          "title": "Glándulas Endocrinas",
+          "level": 4
+        },
+        {
+          "title": "2.1 Generalidades",
+          "level": 3
+        },
+        {
+          "title": "2.2 Células del Tejido Conectivo",
+          "level": 3
+        },
+        {
+          "title": "Sustancia fundamental",
+          "level": 4
+        },
+        {
+          "title": "Fibras",
+          "level": 4
+        },
+        {
+          "title": "A) Conectivo Propiamente Dicho",
+          "level": 4
+        },
+        {
+          "title": "B) Conectivo Especializado",
+          "level": 4
+        },
+        {
+          "title": "2.5 Funciones del Tejido Conectivo",
+          "level": 3
+        },
+        {
+          "title": "¿Cómo clasificas los epitelios?",
+          "level": 3
+        },
+        {
+          "title": "¿Diferencia entre glándula exocrina y endocrina?",
+          "level": 3
+        },
+        {
+          "title": "¿Células del tejido conectivo?",
+          "level": 3
+        },
+        {
+          "title": "¿Tipos de fibras del conectivo?",
+          "level": 3
+        },
+        {
+          "title": "¿Tejidos conectivos especializados?",
+          "level": 3
+        }
+      ],
+      "wordCount": 608,
+      "readingTime": 3
+    },
+    {
+      "id": "04_UD4_MUSCULOS",
+      "filename": "04_UD4_MUSCULOS.md",
+      "title": "Sistema Muscular (Completo)",
+      "unidad": "UD4",
+      "tipo": "teoria",
+      "icon": "💪",
+      "sections": [
+        {
+          "title": "UD4 — MIOLOGÍA (Sistema muscular)",
+          "level": 1
+        },
+        {
+          "title": "1) Generalidades (lo mínimo que te toman sí o sí)",
+          "level": 2
+        },
+        {
+          "title": "Grupo Posterior- Plano Profundo",
+          "level": 4
+        },
+        {
+          "title": "Grupo Interno",
+          "level": 4
+        },
+        {
+          "title": "Grupo Externo",
+          "level": 4
+        },
+        {
+          "title": "Compartimiento Anterior",
+          "level": 4
+        },
+        {
+          "title": "Compartimiento Posterior",
+          "level": 4
+        },
+        {
+          "title": "Region Anterior-Primer Plano",
+          "level": 4
+        },
+        {
+          "title": "Region Anterior-Segundo Plano",
+          "level": 4
+        },
+        {
+          "title": "Region Anterior-Tercer Plano",
+          "level": 4
+        },
+        {
+          "title": "Region Anterior-Cuarto Plano",
+          "level": 4
+        },
+        {
+          "title": "Region Externa",
+          "level": 4
+        },
+        {
+          "title": "Region Posterior- Plano Superficial",
+          "level": 4
+        },
+        {
+          "title": "3) Miembro inferior — Tablas (glútea y muslo) desde Excel",
+          "level": 2
+        },
+        {
+          "title": "Región Glutea",
+          "level": 3
+        },
+        {
+          "title": "Región Anteroexterna",
+          "level": 4
+        },
+        {
+          "title": "Región Posteroexterna",
+          "level": 4
+        },
+        {
+          "title": "4) Pierna y pie — formato examen (origen → inserción → acción → inervación)",
+          "level": 2
+        },
+        {
+          "title": "4.1 Compartimento anterior (nervio fibular profundo)",
+          "level": 3
+        },
+        {
+          "title": "4.2 Compartimento lateral (nervio fibular superficial)",
+          "level": 3
+        },
+        {
+          "title": "4.3 Compartimento posterior superficial (nervio tibial)",
+          "level": 3
+        },
+        {
+          "title": "4.4 Compartimento posterior profundo (nervio tibial)",
+          "level": 3
+        },
+        {
+          "title": "4.5 Pie (muy típico en oral: qué se espera que digas)",
+          "level": 3
+        },
+        {
+          "title": "Checklist de vocabulario (lo que no puede faltar)",
+          "level": 4
+        },
+        {
+          "title": "ANEXO — Compendio: Capítulo “Músculos del miembro inferior” (texto completo)",
+          "level": 2
+        },
+        {
+          "title": "Página 237",
+          "level": 2
+        },
+        {
+          "title": "Página 238",
+          "level": 2
+        },
+        {
+          "title": "Página 239",
+          "level": 2
+        },
+        {
+          "title": "Página 240",
+          "level": 2
+        },
+        {
+          "title": "Página 241",
+          "level": 2
+        },
+        {
+          "title": "Página 242",
+          "level": 2
+        },
+        {
+          "title": "Página 243",
+          "level": 2
+        },
+        {
+          "title": "Página 244",
+          "level": 2
+        },
+        {
+          "title": "Página 245",
+          "level": 2
+        },
+        {
+          "title": "Página 246",
+          "level": 2
+        },
+        {
+          "title": "Página 247",
+          "level": 2
+        },
+        {
+          "title": "Página 248",
+          "level": 2
+        },
+        {
+          "title": "Página 249",
+          "level": 2
+        },
+        {
+          "title": "Página 250",
+          "level": 2
+        },
+        {
+          "title": "Página 251",
+          "level": 2
+        },
+        {
+          "title": "Página 252",
+          "level": 2
+        },
+        {
+          "title": "Página 253",
+          "level": 2
+        },
+        {
+          "title": "Página 254",
+          "level": 2
+        },
+        {
+          "title": "Página 255",
+          "level": 2
+        },
+        {
+          "title": "Página 256",
+          "level": 2
+        },
+        {
+          "title": "Página 257",
+          "level": 2
+        },
+        {
+          "title": "🦵 MIEMBRO INFERIOR (Apunte Completo)",
+          "level": 1
+        }
+      ],
+      "wordCount": 25435,
+      "readingTime": 127
+    },
+    {
+      "id": "05_UD6_NERVIOSO_EXPANDIDO",
+      "filename": "05_UD6_NERVIOSO_EXPANDIDO.md",
+      "title": "Sistema Nervioso (Completo)",
+      "unidad": "UD6",
+      "tipo": "teoria",
+      "icon": "🧠",
+      "sections": [
+        {
+          "title": "🧠 UD6 - SISTEMA NERVIOSO (Expandido)",
+          "level": 1
+        },
+        {
+          "title": "ÍNDICE",
+          "level": 2
+        }
+      ],
+      "wordCount": 25447,
+      "readingTime": 127
+    },
+    {
+      "id": "05_UD6_NERVIOSO_RESUMEN",
+      "filename": "05_UD6_NERVIOSO_RESUMEN.md",
+      "title": "Sistema Nervioso (Resumen)",
+      "unidad": "UD6",
+      "tipo": "resumen",
+      "icon": "🧠",
+      "sections": [
+        {
+          "title": "UD6 - SISTEMA NERVIOSO",
+          "level": 1
+        },
+        {
+          "title": "Índice",
+          "level": 2
+        },
+        {
+          "title": "1) Organización general del sistema nervioso",
+          "level": 2
+        },
+        {
+          "title": "2) Tejido nervioso: neurona, neuroglía y sinapsis",
+          "level": 2
+        },
+        {
+          "title": "3) Meninges, espacios meníngeos y LCR",
+          "level": 2
+        },
+        {
+          "title": "LCR (líquido cefalorraquídeo)",
+          "level": 3
+        },
+        {
+          "title": "4.1 Segmentos y raíces",
+          "level": 3
+        },
+        {
+          "title": "4.2 Tractos (lo mínimo que te preguntan)",
+          "level": 3
+        },
+        {
+          "title": "4.3 Arco reflejo",
+          "level": 3
+        },
+        {
+          "title": "5.1 Tronco encefálico",
+          "level": 3
+        },
+        {
+          "title": "5.2 Cerebelo",
+          "level": 3
+        },
+        {
+          "title": "6.1 Diencéfalo",
+          "level": 3
+        },
+        {
+          "title": "6.2 Telencéfalo",
+          "level": 3
+        },
+        {
+          "title": "7) Sistema ventricular y circulación del LCR (preguntable)",
+          "level": 2
+        },
+        {
+          "title": "8) Vascularización del SNC (muy preguntable)",
+          "level": 2
+        },
+        {
+          "title": "9) Pares craneales (tabla completa)",
+          "level": 2
+        },
+        {
+          "title": "10.1 Plexo cervical (C1–C4)",
+          "level": 3
+        },
+        {
+          "title": "10.2 Plexo braquial (C5–T1)",
+          "level": 3
+        },
+        {
+          "title": "10.3 Plexo lumbar (L1–L4)",
+          "level": 3
+        },
+        {
+          "title": "10.4 Plexo sacro (L4–S4)",
+          "level": 3
+        },
+        {
+          "title": "11) Sistema nervioso autónomo (simpático/parasimpático)",
+          "level": 2
+        },
+        {
+          "title": "Checklist (si te preguntan “explicá X”)",
+          "level": 3
+        },
+        {
+          "title": "Preguntas que caen mucho (alineadas al preguntero)",
+          "level": 3
+        },
+        {
+          "title": "Respaldo 100% (para no perder nada)",
+          "level": 2
+        }
+      ],
+      "wordCount": 1057,
+      "readingTime": 5
+    },
+    {
+      "id": "06_UD7_CARDIOVASCULAR_EXPANDIDO",
+      "filename": "06_UD7_CARDIOVASCULAR_EXPANDIDO.md",
+      "title": "Sistema Cardiovascular (Completo)",
+      "unidad": "UD7",
+      "tipo": "teoria",
+      "icon": "❤️",
+      "sections": [
+        {
+          "title": "❤️ UD7 - SISTEMA CARDIOVASCULAR Y LINFÁTICO (Expandido)",
+          "level": 1
+        },
+        {
+          "title": "ÍNDICE",
+          "level": 2
+        },
+        {
+          "title": "🔹 1. GENERALIDADES",
+          "level": 3
+        },
+        {
+          "title": "🔹 2. CORAZÓN",
+          "level": 3
+        },
+        {
+          "title": "🔹 3. CUBIERTAS DEL CORAZÓN",
+          "level": 3
+        },
+        {
+          "title": "🔹 4. CAVIDADES CARDÍACAS",
+          "level": 3
+        },
+        {
+          "title": "🔹 5. VÁLVULAS CARDÍACAS",
+          "level": 3
+        },
+        {
+          "title": "🔹 6. CARAS Y SURCOS DEL CORAZÓN",
+          "level": 3
+        },
+        {
+          "title": "🔹 7. IRRIGACIÓN DEL CORAZÓN (CIRCULACIÓN CORONARIA)",
+          "level": 3
+        },
+        {
+          "title": "🔹 8. SISTEMA DE CONDUCCIÓN CARDÍACA",
+          "level": 3
+        },
+        {
+          "title": "🔹 9. INERVACIÓN DEL CORAZÓN",
+          "level": 3
+        },
+        {
+          "title": "🔹 10. VASCULARIZACIÓN GENERAL DEL CUERPO",
+          "level": 3
+        },
+        {
+          "title": "🔹 1. CAPAS HISTOLÓGICAS DE LOS VASOS SANGUÍNEOS",
+          "level": 3
+        },
+        {
+          "title": "🔹 2. TIPOS DE ARTERIAS",
+          "level": 3
+        },
+        {
+          "title": "🔹 3. CAPILARES",
+          "level": 3
+        },
+        {
+          "title": "🔹 4. VENAS",
+          "level": 3
+        },
+        {
+          "title": "🔹 5. VASOS LINFÁTICOS",
+          "level": 3
+        },
+        {
+          "title": "🔹 6. HISTOLOGÍA DEL CORAZÓN",
+          "level": 3
+        },
+        {
+          "title": "🔹 7. CÉLULAS CARDÍACAS",
+          "level": 3
+        },
+        {
+          "title": "🔹 8. MICROANATOMÍA DE LAS VÁLVULAS CARDÍACAS",
+          "level": 3
+        },
+        {
+          "title": "🔹 9. CORRELACIÓN FUNCIONAL HISTOLÓGICA",
+          "level": 3
+        },
+        {
+          "title": "🔹 1. CIRCULACIÓN MAYOR (SISTÉMICA)",
+          "level": 3
+        },
+        {
+          "title": "🔹 2. CIRCULACIÓN MENOR (PULMONAR)",
+          "level": 3
+        },
+        {
+          "title": "🔹 3. CIRCULACIÓN CORONARIA (DEL CORAZÓN)",
+          "level": 3
+        },
+        {
+          "title": "🔹 4. CIRCULACIÓN PORTAL HEPÁTICA",
+          "level": 3
+        },
+        {
+          "title": "🔹 5. ARTERIAS PRINCIPALES Y SU RECORRIDO",
+          "level": 3
+        },
+        {
+          "title": "🔹 6. VENAS PRINCIPALES Y SU RECORRIDO",
+          "level": 3
+        },
+        {
+          "title": "🔹 7. ESQUEMA RESUMEN DE CIRCULACIONES",
+          "level": 3
+        },
+        {
+          "title": "🔹 8. PUNTOS CLAVE DE EXAMEN",
+          "level": 3
+        },
+        {
+          "title": "🔸 Arteria vs Vena vs Capilar",
+          "level": 4
+        },
+        {
+          "title": "🔸 Circulación Mayor vs Menor",
+          "level": 4
+        },
+        {
+          "title": "🔸 Arteria Elástica vs Arteria Muscular",
+          "level": 4
+        },
+        {
+          "title": "🔸 Aurículas vs Ventrículos",
+          "level": 4
+        },
+        {
+          "title": "🔹 2. CORRELACIONES CLÍNICAS",
+          "level": 3
+        },
+        {
+          "title": "🩺 1. ¿Qué ramas nacen del cayado de la aorta?",
+          "level": 4
+        },
+        {
+          "title": "🩺 2. ¿Qué arteria irriga la mayor parte del ventrículo izquierdo?",
+          "level": 4
+        },
+        {
+          "title": "🩺 3. ¿Dónde drena el seno coronario?",
+          "level": 4
+        },
+        {
+          "title": "🩺 4. ¿Qué tipo de arteria es la aorta?",
+          "level": 4
+        },
+        {
+          "title": "🩺 5. ¿Qué vasos participan en la circulación portal?",
+          "level": 4
+        },
+        {
+          "title": "🩺 6. ¿Cuál es la diferencia histológica entre una arteria y una vena?",
+          "level": 4
+        },
+        {
+          "title": "🩺 7. ¿Cuál es la función del sistema de conducción cardíaco?",
+          "level": 4
+        },
+        {
+          "title": "🩺 8. ¿Qué válvula separa el ventrículo izquierdo de la aorta?",
+          "level": 4
+        },
+        {
+          "title": "🩺 9. ¿Dónde se localiza el nódulo auriculoventricular?",
+          "level": 4
+        },
+        {
+          "title": "🩺 10. ¿Cuál es el trayecto de la arteria femoral?",
+          "level": 4
+        },
+        {
+          "title": "🩺 11. ¿Cuál es el vaso que transporta sangre oxigenada desde los pulmones?",
+          "level": 4
+        },
+        {
+          "title": "🩺 12. ¿Qué nombre recibe el revestimiento interno del corazón?",
+          "level": 4
+        },
+        {
+          "title": "🩺 13. ¿Qué estructura impide el reflujo de sangre hacia las aurículas?",
+          "level": 4
+        },
+        {
+          "title": "🩺 14. ¿Cuál es el punto más declive de la cavidad pericárdica?",
+          "level": 4
+        },
+        {
+          "title": "🩺 15. ¿Dónde desembocan las venas cavas?",
+          "level": 4
+        },
+        {
+          "title": "🔹 4. RESUMEN GLOBAL DEL SISTEMA CARDIOVASCULAR",
+          "level": 3
+        }
+      ],
+      "wordCount": 6865,
+      "readingTime": 34
+    },
+    {
+      "id": "06_UD7_CARDIOVASCULAR_RESUMEN",
+      "filename": "06_UD7_CARDIOVASCULAR_RESUMEN.md",
+      "title": "Sistema Cardiovascular (Resumen)",
+      "unidad": "UD7",
+      "tipo": "resumen",
+      "icon": "❤️",
+      "sections": [
+        {
+          "title": "UD7 - SISTEMA CARDIOVASCULAR (ANGIOLOGÍA)",
+          "level": 1
+        },
+        {
+          "title": "Índice",
+          "level": 2
+        },
+        {
+          "title": "1) Conceptos base",
+          "level": 2
+        },
+        {
+          "title": "2.1 Situación",
+          "level": 3
+        },
+        {
+          "title": "2.2 Pericardio (lo preguntable)",
+          "level": 3
+        },
+        {
+          "title": "2.3 Caras y surcos",
+          "level": 3
+        },
+        {
+          "title": "2.4 Cavidades y tabiques",
+          "level": 3
+        },
+        {
+          "title": "3.1 Válvulas",
+          "level": 3
+        },
+        {
+          "title": "3.2 Grandes vasos (entrada/salida)",
+          "level": 3
+        },
+        {
+          "title": "4.1 Arterias coronarias (concepto + ramas típicas)",
+          "level": 3
+        },
+        {
+          "title": "4.2 Venas del corazón",
+          "level": 3
+        },
+        {
+          "title": "5) Sistema de conducción (mínimo que toman)",
+          "level": 2
+        },
+        {
+          "title": "6.1 Aorta ascendente y arco aórtico",
+          "level": 3
+        },
+        {
+          "title": "6.2 Aorta torácica y abdominal (muy resumido pero útil)",
+          "level": 3
+        },
+        {
+          "title": "7) Sistema venoso (lo que más preguntan)",
+          "level": 2
+        },
+        {
+          "title": "8) Sistema linfático (examen oral)",
+          "level": 2
+        },
+        {
+          "title": "Checklist (cómo contestar)",
+          "level": 3
+        },
+        {
+          "title": "Preguntas típicas",
+          "level": 3
+        },
+        {
+          "title": "Respaldo 100% (para no perder nada)",
+          "level": 2
+        }
+      ],
+      "wordCount": 695,
+      "readingTime": 3
+    },
+    {
+      "id": "07_UD8_RESPIRATORIO_EXPANDIDO",
+      "filename": "07_UD8_RESPIRATORIO_EXPANDIDO.md",
+      "title": "Sistema Respiratorio (Completo)",
+      "unidad": "UD8",
+      "tipo": "teoria",
+      "icon": "🫁",
+      "sections": [
+        {
+          "title": "🫁 UD8 - SISTEMA RESPIRATORIO (Expandido)",
+          "level": 1
+        },
+        {
+          "title": "SISTEMA RESPIRATORIO",
+          "level": 1
+        },
+        {
+          "title": "Página 1",
+          "level": 2
+        },
+        {
+          "title": "Página 2",
+          "level": 2
+        },
+        {
+          "title": "Página 3",
+          "level": 2
+        },
+        {
+          "title": "Página 4",
+          "level": 2
+        },
+        {
+          "title": "Página 5",
+          "level": 2
+        },
+        {
+          "title": "Página 6",
+          "level": 2
+        },
+        {
+          "title": "Página 7",
+          "level": 2
+        },
+        {
+          "title": "Página 8",
+          "level": 2
+        },
+        {
+          "title": "Página 9",
+          "level": 2
+        },
+        {
+          "title": "Página 10",
+          "level": 2
+        },
+        {
+          "title": "Página 11",
+          "level": 2
+        },
+        {
+          "title": "Página 12",
+          "level": 2
+        },
+        {
+          "title": "Página 13",
+          "level": 2
+        },
+        {
+          "title": "Página 14",
+          "level": 2
+        },
+        {
+          "title": "Página 15",
+          "level": 2
+        },
+        {
+          "title": "Página 16",
+          "level": 2
+        },
+        {
+          "title": "Página 17",
+          "level": 2
+        },
+        {
+          "title": "Página 18",
+          "level": 2
+        },
+        {
+          "title": "Página 19",
+          "level": 2
+        },
+        {
+          "title": "Página 20",
+          "level": 2
+        },
+        {
+          "title": "Página 21",
+          "level": 2
+        },
+        {
+          "title": "Página 22",
+          "level": 2
+        },
+        {
+          "title": "Página 23",
+          "level": 2
+        },
+        {
+          "title": "Página 24",
+          "level": 2
+        },
+        {
+          "title": "Página 25",
+          "level": 2
+        },
+        {
+          "title": "Página 26",
+          "level": 2
+        },
+        {
+          "title": "Página 27",
+          "level": 2
+        },
+        {
+          "title": "Página 28",
+          "level": 2
+        },
+        {
+          "title": "Página 29",
+          "level": 2
+        },
+        {
+          "title": "Página 30",
+          "level": 2
+        },
+        {
+          "title": "Página 31",
+          "level": 2
+        },
+        {
+          "title": "Página 32",
+          "level": 2
+        },
+        {
+          "title": "Página 33",
+          "level": 2
+        },
+        {
+          "title": "Página 34",
+          "level": 2
+        },
+        {
+          "title": "Página 35",
+          "level": 2
+        },
+        {
+          "title": "Página 36",
+          "level": 2
+        },
+        {
+          "title": "Página 37",
+          "level": 2
+        },
+        {
+          "title": "Página 38",
+          "level": 2
+        },
+        {
+          "title": "Página 39",
+          "level": 2
+        },
+        {
+          "title": "Página 40",
+          "level": 2
+        },
+        {
+          "title": "Página 41",
+          "level": 2
+        },
+        {
+          "title": "Página 42",
+          "level": 2
+        },
+        {
+          "title": "Página 43",
+          "level": 2
+        },
+        {
+          "title": "Página 44",
+          "level": 2
+        },
+        {
+          "title": "Página 45",
+          "level": 2
+        },
+        {
+          "title": "Página 46",
+          "level": 2
+        },
+        {
+          "title": "Página 47",
+          "level": 2
+        },
+        {
+          "title": "Página 48",
+          "level": 2
+        }
+      ],
+      "wordCount": 16217,
+      "readingTime": 81
+    },
+    {
+      "id": "07_UD8_RESPIRATORIO_RESUMEN",
+      "filename": "07_UD8_RESPIRATORIO_RESUMEN.md",
+      "title": "Sistema Respiratorio (Resumen)",
+      "unidad": "UD8",
+      "tipo": "resumen",
+      "icon": "🫁",
+      "sections": [
+        {
+          "title": "UD8 - SISTEMA RESPIRATORIO (Y FONACIÓN)",
+          "level": 1
+        },
+        {
+          "title": "Índice",
+          "level": 2
+        },
+        {
+          "title": "1) Visión general",
+          "level": 2
+        },
+        {
+          "title": "2) Cavidad nasal y senos paranasales",
+          "level": 2
+        },
+        {
+          "title": "3) Faringe",
+          "level": 2
+        },
+        {
+          "title": "4.1 Esqueleto cartilaginoso (lo que toman)",
+          "level": 3
+        },
+        {
+          "title": "4.2 Cavidad laríngea (concepto)",
+          "level": 3
+        },
+        {
+          "title": "4.3 Inervación (alto rendimiento)",
+          "level": 3
+        },
+        {
+          "title": "5) Tráquea y árbol bronquial",
+          "level": 2
+        },
+        {
+          "title": "6.1 Lobos y fisuras",
+          "level": 3
+        },
+        {
+          "title": "6.2 Hilio y raíz del pulmón (preguntable)",
+          "level": 3
+        },
+        {
+          "title": "6.3 Segmentos broncopulmonares (idea)",
+          "level": 3
+        },
+        {
+          "title": "7) Pleuras y cavidad pleural",
+          "level": 2
+        },
+        {
+          "title": "8) Mecánica respiratoria (lo mínimo)",
+          "level": 2
+        },
+        {
+          "title": "9) Fonación (noción anatómica)",
+          "level": 2
+        },
+        {
+          "title": "Checklist rápido",
+          "level": 3
+        },
+        {
+          "title": "Preguntas típicas (para validar con preguntero)",
+          "level": 3
+        },
+        {
+          "title": "Respaldo 100% (para no perder nada)",
+          "level": 2
+        }
+      ],
+      "wordCount": 602,
+      "readingTime": 3
+    },
+    {
+      "id": "08_UD9_10_DIGESTIVO_EXPANDIDO",
+      "filename": "08_UD9_10_DIGESTIVO_EXPANDIDO.md",
+      "title": "Sistema Digestivo (Completo)",
+      "unidad": "UD9-10",
+      "tipo": "teoria",
+      "icon": "🍽️",
+      "sections": [
+        {
+          "title": "🍽️ UD9-10 - SISTEMA DIGESTIVO (Expandido)",
+          "level": 1
+        },
+        {
+          "title": "SISTEMA DIGESTIVO 2021",
+          "level": 1
+        },
+        {
+          "title": "Página 1",
+          "level": 2
+        },
+        {
+          "title": "Página 2",
+          "level": 2
+        },
+        {
+          "title": "Página 3",
+          "level": 2
+        },
+        {
+          "title": "Página 4",
+          "level": 2
+        },
+        {
+          "title": "Página 5",
+          "level": 2
+        },
+        {
+          "title": "Página 6",
+          "level": 2
+        },
+        {
+          "title": "Página 7",
+          "level": 2
+        },
+        {
+          "title": "Página 8",
+          "level": 2
+        },
+        {
+          "title": "Página 9",
+          "level": 2
+        },
+        {
+          "title": "Página 10",
+          "level": 2
+        },
+        {
+          "title": "Página 11",
+          "level": 2
+        },
+        {
+          "title": "Página 12",
+          "level": 2
+        },
+        {
+          "title": "Página 13",
+          "level": 2
+        },
+        {
+          "title": "Página 14",
+          "level": 2
+        },
+        {
+          "title": "Página 15",
+          "level": 2
+        },
+        {
+          "title": "Página 16",
+          "level": 2
+        },
+        {
+          "title": "Página 17",
+          "level": 2
+        },
+        {
+          "title": "Página 18",
+          "level": 2
+        },
+        {
+          "title": "Página 19",
+          "level": 2
+        },
+        {
+          "title": "Página 20",
+          "level": 2
+        },
+        {
+          "title": "Página 21",
+          "level": 2
+        },
+        {
+          "title": "Página 22",
+          "level": 2
+        },
+        {
+          "title": "Página 23",
+          "level": 2
+        },
+        {
+          "title": "Página 24",
+          "level": 2
+        },
+        {
+          "title": "Página 25",
+          "level": 2
+        },
+        {
+          "title": "Página 26",
+          "level": 2
+        },
+        {
+          "title": "Página 27",
+          "level": 2
+        },
+        {
+          "title": "Página 28",
+          "level": 2
+        },
+        {
+          "title": "Página 29",
+          "level": 2
+        },
+        {
+          "title": "Página 30",
+          "level": 2
+        },
+        {
+          "title": "Página 31",
+          "level": 2
+        },
+        {
+          "title": "Página 32",
+          "level": 2
+        },
+        {
+          "title": "Página 33",
+          "level": 2
+        },
+        {
+          "title": "Página 34",
+          "level": 2
+        },
+        {
+          "title": "Página 35",
+          "level": 2
+        },
+        {
+          "title": "Página 36",
+          "level": 2
+        },
+        {
+          "title": "Página 37",
+          "level": 2
+        },
+        {
+          "title": "Página 38",
+          "level": 2
+        },
+        {
+          "title": "Página 39",
+          "level": 2
+        },
+        {
+          "title": "Página 40",
+          "level": 2
+        },
+        {
+          "title": "Página 41",
+          "level": 2
+        },
+        {
+          "title": "Página 42",
+          "level": 2
+        },
+        {
+          "title": "Página 43",
+          "level": 2
+        },
+        {
+          "title": "Página 44",
+          "level": 2
+        },
+        {
+          "title": "Página 45",
+          "level": 2
+        },
+        {
+          "title": "Página 46",
+          "level": 2
+        },
+        {
+          "title": "Página 47",
+          "level": 2
+        },
+        {
+          "title": "Página 48",
+          "level": 2
+        }
+      ],
+      "wordCount": 25165,
+      "readingTime": 125
+    },
+    {
+      "id": "08_UD9_10_DIGESTIVO_RESUMEN",
+      "filename": "08_UD9_10_DIGESTIVO_RESUMEN.md",
+      "title": "Sistema Digestivo (Resumen)",
+      "unidad": "UD9-10",
+      "tipo": "resumen",
+      "icon": "🍽️",
+      "sections": [
+        {
+          "title": "UD9-10 - SISTEMA DIGESTIVO",
+          "level": 1
+        },
+        {
+          "title": "Índice",
+          "level": 2
+        },
+        {
+          "title": "1) Mapa general (qué es y cómo se organiza)",
+          "level": 2
+        },
+        {
+          "title": "1.1 Peritoneo (lo preguntan muchísimo)",
+          "level": 3
+        },
+        {
+          "title": "2.1 División y paredes",
+          "level": 3
+        },
+        {
+          "title": "2.2 Dientes (muy preguntable, aunque sea rápido)",
+          "level": 3
+        },
+        {
+          "title": "2.3 Glándulas salivales (solo lo esencial)",
+          "level": 3
+        },
+        {
+          "title": "3) Faringe (divisiones + función)",
+          "level": 2
+        },
+        {
+          "title": "4) Esófago (porciones + estrecheces)",
+          "level": 2
+        },
+        {
+          "title": "5.1 Situación, dirección y forma",
+          "level": 3
+        },
+        {
+          "title": "5.2 Partes y accidentes",
+          "level": 3
+        },
+        {
+          "title": "5.3 Medios de fijación (idea clave)",
+          "level": 3
+        },
+        {
+          "title": "5.4 Irrigación e inervación (lo mínimo correcto)",
+          "level": 3
+        },
+        {
+          "title": "6) Intestino delgado",
+          "level": 2
+        },
+        {
+          "title": "6.1 Duodeno (lo que suelen tomar)",
+          "level": 3
+        },
+        {
+          "title": "6.2 Yeyuno e íleon",
+          "level": 3
+        },
+        {
+          "title": "7.1 Rasgos generales (para reconocerlo)",
+          "level": 3
+        },
+        {
+          "title": "7.2 Segmentos",
+          "level": 3
+        },
+        {
+          "title": "8.1 Generalidades",
+          "level": 3
+        },
+        {
+          "title": "8.2 Pedículos (lo que NO puede faltarte)",
+          "level": 3
+        },
+        {
+          "title": "8.3 Vesícula y conductos biliares (esquema simple)",
+          "level": 3
+        },
+        {
+          "title": "9) Páncreas (anexo: situación + conductos)",
+          "level": 2
+        },
+        {
+          "title": "10.1 Arterias digestivas (tres troncos)",
+          "level": 3
+        },
+        {
+          "title": "10.2 Inervación “por capas”",
+          "level": 3
+        },
+        {
+          "title": "Checklist (si lo sabés, llegás bien al oral)",
+          "level": 3
+        },
+        {
+          "title": "Preguntas típicas (con respuesta corta)",
+          "level": 3
+        }
+      ],
+      "wordCount": 1310,
+      "readingTime": 6
+    },
+    {
+      "id": "09_UD11_URINARIO_EXPANDIDO",
+      "filename": "09_UD11_URINARIO_EXPANDIDO.md",
+      "title": "Sistema Urinario (Completo)",
+      "unidad": "UD11",
+      "tipo": "teoria",
+      "icon": "🫘",
+      "sections": [
+        {
+          "title": "🫘 UD11 - SISTEMA URINARIO (Expandido)",
+          "level": 1
+        },
+        {
+          "title": "SIST  URINARIO",
+          "level": 1
+        },
+        {
+          "title": "Página 1",
+          "level": 2
+        },
+        {
+          "title": "Página 2",
+          "level": 2
+        },
+        {
+          "title": "Página 3",
+          "level": 2
+        },
+        {
+          "title": "Página 4",
+          "level": 2
+        },
+        {
+          "title": "Página 5",
+          "level": 2
+        },
+        {
+          "title": "Página 6",
+          "level": 2
+        },
+        {
+          "title": "Página 7",
+          "level": 2
+        },
+        {
+          "title": "Página 8",
+          "level": 2
+        },
+        {
+          "title": "Página 9",
+          "level": 2
+        },
+        {
+          "title": "Página 10",
+          "level": 2
+        },
+        {
+          "title": "Página 11",
+          "level": 2
+        },
+        {
+          "title": "Página 12",
+          "level": 2
+        },
+        {
+          "title": "Página 13",
+          "level": 2
+        },
+        {
+          "title": "Página 14",
+          "level": 2
+        },
+        {
+          "title": "Página 15",
+          "level": 2
+        },
+        {
+          "title": "Página 16",
+          "level": 2
+        },
+        {
+          "title": "Página 17",
+          "level": 2
+        },
+        {
+          "title": "Página 18",
+          "level": 2
+        }
+      ],
+      "wordCount": 5053,
+      "readingTime": 25
+    },
+    {
+      "id": "09_UD11_URINARIO_RESUMEN",
+      "filename": "09_UD11_URINARIO_RESUMEN.md",
+      "title": "Sistema Urinario (Resumen)",
+      "unidad": "UD11",
+      "tipo": "resumen",
+      "icon": "🫘",
+      "sections": [
+        {
+          "title": "UD11 - APARATO URINARIO",
+          "level": 1
+        },
+        {
+          "title": "Índice",
+          "level": 2
+        },
+        {
+          "title": "1) Función y visión general",
+          "level": 2
+        },
+        {
+          "title": "2.1 Situación y relaciones (alto rendimiento)",
+          "level": 3
+        },
+        {
+          "title": "2.2 Cubiertas",
+          "level": 3
+        },
+        {
+          "title": "2.3 Configuración externa",
+          "level": 3
+        },
+        {
+          "title": "2.4 Configuración interna",
+          "level": 3
+        },
+        {
+          "title": "3.1 Orden en el hilio (clásico)",
+          "level": 3
+        },
+        {
+          "title": "3.2 Arterias",
+          "level": 3
+        },
+        {
+          "title": "3.3 Venas",
+          "level": 3
+        },
+        {
+          "title": "4.1 Uréter",
+          "level": 3
+        },
+        {
+          "title": "5) Vejiga urinaria",
+          "level": 2
+        },
+        {
+          "title": "6.1 Uretra femenina (noción)",
+          "level": 3
+        },
+        {
+          "title": "6.2 Uretra masculina (noción)",
+          "level": 3
+        },
+        {
+          "title": "7) Inervación y linfáticos (lo que suelen preguntar)",
+          "level": 2
+        },
+        {
+          "title": "Checklist",
+          "level": 3
+        },
+        {
+          "title": "Preguntas típicas",
+          "level": 3
+        },
+        {
+          "title": "Respaldo 100% (para no perder nada)",
+          "level": 2
+        }
+      ],
+      "wordCount": 601,
+      "readingTime": 3
+    },
+    {
+      "id": "10_UD12_13_REPRODUCTOR_EXPANDIDO",
+      "filename": "10_UD12_13_REPRODUCTOR_EXPANDIDO.md",
+      "title": "Sistema Reproductor (Completo)",
+      "unidad": "UD12-13",
+      "tipo": "teoria",
+      "icon": "🩷",
+      "sections": [
+        {
+          "title": "🩷 UD12-13 - SISTEMA REPRODUCTOR (Expandido)",
+          "level": 1
+        },
+        {
+          "title": "ÍNDICE",
+          "level": 2
+        },
+        {
+          "title": "**🔹 ESTRUCTURA GENERAL**",
+          "level": 3
+        },
+        {
+          "title": "**🧠 1. OVARIOS**",
+          "level": 3
+        },
+        {
+          "title": "**🩸 2. TROMPAS UTERINAS (OVIDUCTOS)**",
+          "level": 3
+        },
+        {
+          "title": "**🩸 3. ÚTERO**",
+          "level": 3
+        },
+        {
+          "title": "**🩸 4. VAGINA**",
+          "level": 3
+        },
+        {
+          "title": "**🩸 5. VULVA Y GLÁNDULAS**",
+          "level": 3
+        },
+        {
+          "title": "**🍼 6. GLÁNDULAS MAMARIAS**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 1. OVARIO**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 2. TROMPAS UTERINAS (OVIDUCTOS)**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 3. ÚTERO**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 4. VAGINA**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 5. VULVA Y GLÁNDULAS**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 6. GLÁNDULAS MAMARIAS**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 7. CORRELACIONES FUNCIONALES**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 1. CONJUNTO DE ÓRGANOS**",
+          "level": 3
+        },
+        {
+          "title": "**🧫 1. TESTÍCULOS**",
+          "level": 3
+        },
+        {
+          "title": "**🧫 2. EPIDÍDIMO**",
+          "level": 3
+        },
+        {
+          "title": "**🧫 3. CONDUCTO DEFERENTE**",
+          "level": 3
+        },
+        {
+          "title": "**🧫 4. VESÍCULAS SEMINALES**",
+          "level": 3
+        },
+        {
+          "title": "**🧫 5. CONDUCTOS EYACULADORES**",
+          "level": 3
+        },
+        {
+          "title": "**🧫 6. PRÓSTATA**",
+          "level": 3
+        },
+        {
+          "title": "**🧫 7. GLÁNDULAS BULBOURETRALES (COWPER)**",
+          "level": 3
+        },
+        {
+          "title": "**🧫 8. PENE**",
+          "level": 3
+        },
+        {
+          "title": "**1. TESTÍCULO**",
+          "level": 3
+        },
+        {
+          "title": "**2. EPIDÍDIMO**",
+          "level": 3
+        },
+        {
+          "title": "**3. CONDUCTO DEFERENTE**",
+          "level": 3
+        },
+        {
+          "title": "**4. VESÍCULAS SEMINALES**",
+          "level": 3
+        },
+        {
+          "title": "**5. PRÓSTATA**",
+          "level": 3
+        },
+        {
+          "title": "**6. GLÁNDULAS DE COWPER**",
+          "level": 3
+        },
+        {
+          "title": "**7. PENE**",
+          "level": 3
+        },
+        {
+          "title": "**🧬 CORRELACIONES FUNCIONALES**",
+          "level": 3
+        },
+        {
+          "title": "**🧬 Formación y trayecto del conducto espermático**",
+          "level": 2
+        },
+        {
+          "title": "**🔹 1. FORMACIÓN ANATÓMICA DEL CONDUCTO ESPERMÁTICO (vías excretoras masculinas)**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 2. CONDUCTO ESPERMÁTICO DENTRO DEL CORDÓN ESPERMÁTICO**",
+          "level": 3
+        },
+        {
+          "title": "**🧫 Embriología resumida (si lo llegan a preguntar)**",
+          "level": 3
+        },
+        {
+          "title": "**💬 En examen, podés responder así:**",
+          "level": 3
+        },
+        {
+          "title": "**🧬 CUADRO COMPARATIVO COMPLETO – SISTEMAS REPRODUCTORES**",
+          "level": 2
+        },
+        {
+          "title": "**🧠 PUNTOS CLAVE DE COMPRENSIÓN**",
+          "level": 3
+        },
+        {
+          "title": "**🩺 PREGUNTAS FRECUENTES DE FINAL**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 OVARIO**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 TROMPAS UTERINAS (OVIDUCTOS)**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 ÚTERO**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 VAGINA Y VULVA**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 GLÁNDULAS MAMARIAS**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 SISTEMA REPRODUCTOR MASCULINO**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 1. Embriología del sistema reproductor**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 2. Relaciones topográficas importantes**",
+          "level": 3
+        },
+        {
+          "title": "**🔹 3. Correlaciones clínicas frecuentes**",
+          "level": 3
+        }
+      ],
+      "wordCount": 10299,
+      "readingTime": 51
+    },
+    {
+      "id": "10_UD12_13_REPRODUCTOR_RESUMEN",
+      "filename": "10_UD12_13_REPRODUCTOR_RESUMEN.md",
+      "title": "Sistema Reproductor (Resumen)",
+      "unidad": "UD12-13",
+      "tipo": "resumen",
+      "icon": "🩷",
+      "sections": [
+        {
+          "title": "UD12-13 - APARATO REPRODUCTOR",
+          "level": 1
+        },
+        {
+          "title": "Índice",
+          "level": 2
+        },
+        {
+          "title": "1) Conceptos base",
+          "level": 2
+        },
+        {
+          "title": "2.1 Testículos y epidídimo",
+          "level": 3
+        },
+        {
+          "title": "2.2 Conducto deferente y cordón espermático (muy preguntable)",
+          "level": 3
+        },
+        {
+          "title": "2.3 Vesículas seminales, próstata y glándulas bulbouretrales",
+          "level": 3
+        },
+        {
+          "title": "2.4 Uretra masculina (resumen)",
+          "level": 3
+        },
+        {
+          "title": "2.5 Trayecto del esperma (respuesta de examen)",
+          "level": 3
+        },
+        {
+          "title": "3.1 Ovarios",
+          "level": 3
+        },
+        {
+          "title": "3.2 Trompas uterinas (oviductos)",
+          "level": 3
+        },
+        {
+          "title": "3.3 Útero",
+          "level": 3
+        },
+        {
+          "title": "3.4 Vagina y genitales externos (noción)",
+          "level": 3
+        },
+        {
+          "title": "4) Periné y pelvis (lo mínimo que toman)",
+          "level": 2
+        },
+        {
+          "title": "5) Irrigación, drenaje e inervación (mapa de alto rendimiento)",
+          "level": 2
+        },
+        {
+          "title": "Checklist",
+          "level": 3
+        },
+        {
+          "title": "Preguntas típicas",
+          "level": 3
+        },
+        {
+          "title": "Respaldo 100% (para no perder nada)",
+          "level": 2
+        }
+      ],
+      "wordCount": 520,
+      "readingTime": 2
+    },
+    {
+      "id": "11B_UD14_ENDOCRINO",
+      "filename": "11B_UD14_ENDOCRINO.md",
+      "title": "Sistema Endocrino",
+      "unidad": "UD14",
+      "tipo": "teoria",
+      "icon": "⚗️",
+      "sections": [
+        {
+          "title": "🧬 UD14 - SISTEMA ENDÓCRINO",
+          "level": 1
+        },
+        {
+          "title": "Definición",
+          "level": 3
+        },
+        {
+          "title": "Funciones",
+          "level": 3
+        },
+        {
+          "title": "Eje Hipotálamo-Hipofisario",
+          "level": 3
+        },
+        {
+          "title": "Características Anatómicas",
+          "level": 3
+        },
+        {
+          "title": "Relaciones",
+          "level": 3
+        },
+        {
+          "title": "Irrigación",
+          "level": 3
+        },
+        {
+          "title": "Partes",
+          "level": 3
+        },
+        {
+          "title": "Adenohipófisis - Tipos Celulares",
+          "level": 3
+        },
+        {
+          "title": "Neurohipófisis",
+          "level": 3
+        },
+        {
+          "title": "Características Anatómicas",
+          "level": 3
+        },
+        {
+          "title": "Relaciones",
+          "level": 3
+        },
+        {
+          "title": "Hormona",
+          "level": 3
+        },
+        {
+          "title": "Características Anatómicas",
+          "level": 3
+        },
+        {
+          "title": "Relaciones",
+          "level": 3
+        },
+        {
+          "title": "Irrigación",
+          "level": 3
+        },
+        {
+          "title": "Drenaje Venoso",
+          "level": 3
+        },
+        {
+          "title": "Folículos Tiroideos",
+          "level": 4
+        },
+        {
+          "title": "Células Foliculares",
+          "level": 4
+        },
+        {
+          "title": "Células Parafoliculares (Células C)",
+          "level": 4
+        },
+        {
+          "title": "Características Anatómicas",
+          "level": 3
+        },
+        {
+          "title": "Relaciones",
+          "level": 3
+        },
+        {
+          "title": "Irrigación",
+          "level": 3
+        },
+        {
+          "title": "Hormona",
+          "level": 3
+        },
+        {
+          "title": "Características Anatómicas",
+          "level": 3
+        },
+        {
+          "title": "Relaciones",
+          "level": 3
+        },
+        {
+          "title": "Irrigación",
+          "level": 3
+        },
+        {
+          "title": "Drenaje Venoso",
+          "level": 3
+        },
+        {
+          "title": "CORTEZA (90% del volumen)",
+          "level": 4
+        },
+        {
+          "title": "MÉDULA (10% del volumen)",
+          "level": 4
+        },
+        {
+          "title": "¿Partes de la hipófisis?",
+          "level": 3
+        },
+        {
+          "title": "¿Qué es el eje hipotálamo-hipofisario?",
+          "level": 3
+        },
+        {
+          "title": "¿Células de la adenohipófisis?",
+          "level": 3
+        },
+        {
+          "title": "¿Irrigación de tiroides?",
+          "level": 3
+        },
+        {
+          "title": "¿Diferencia entre células foliculares y parafoliculares?",
+          "level": 3
+        },
+        {
+          "title": "¿Zonas de la corteza suprarrenal?",
+          "level": 3
+        },
+        {
+          "title": "¿Por qué la vena suprarrenal derecha es más corta?",
+          "level": 3
+        }
+      ],
+      "wordCount": 812,
+      "readingTime": 4
+    },
+    {
+      "id": "11_CABEZA_CARA_EXPANDIDO",
+      "filename": "11_CABEZA_CARA_EXPANDIDO.md",
+      "title": "Cabeza y Cara (Completo)",
+      "unidad": "UD14",
+      "tipo": "teoria",
+      "icon": "💀",
+      "sections": [
+        {
+          "title": "🦴 CABEZA Y CARA (Expandido)",
+          "level": 1
+        },
+        {
+          "title": "ÍNDICE",
+          "level": 2
+        }
+      ],
+      "wordCount": 18199,
+      "readingTime": 90
+    },
+    {
+      "id": "11_CABEZA_CARA_RESUMEN",
+      "filename": "11_CABEZA_CARA_RESUMEN.md",
+      "title": "Cabeza y Cara (Resumen)",
+      "unidad": "UD14",
+      "tipo": "resumen",
+      "icon": "💀",
+      "sections": [
+        {
+          "title": "CABEZA Y CARA",
+          "level": 1
+        },
+        {
+          "title": "Índice",
+          "level": 2
+        },
+        {
+          "title": "1) Regiones de la cara (mapa rápido)",
+          "level": 2
+        },
+        {
+          "title": "2.1 Cavidad orbitaria (idea)",
+          "level": 3
+        },
+        {
+          "title": "2.2 Globo ocular (noción anatómica)",
+          "level": 3
+        },
+        {
+          "title": "3) Músculos extrínsecos del ojo e inervación (alto rendimiento)",
+          "level": 2
+        },
+        {
+          "title": "4) Aparato lagrimal (noción)",
+          "level": 2
+        },
+        {
+          "title": "5.1 Oído externo",
+          "level": 3
+        },
+        {
+          "title": "5.2 Oído medio",
+          "level": 3
+        },
+        {
+          "title": "5.3 Oído interno",
+          "level": 3
+        },
+        {
+          "title": "6) Nariz y cavidad nasal",
+          "level": 2
+        },
+        {
+          "title": "7) Cavidad oral (noción anatómica)",
+          "level": 2
+        },
+        {
+          "title": "8) ATM (articulación temporomandibular)",
+          "level": 2
+        },
+        {
+          "title": "Checklist",
+          "level": 3
+        },
+        {
+          "title": "Preguntas típicas",
+          "level": 3
+        },
+        {
+          "title": "Respaldo 100% (para no perder nada)",
+          "level": 2
+        }
+      ],
+      "wordCount": 578,
+      "readingTime": 2
+    },
+    {
+      "id": "12_GUIAS_ORALES",
+      "filename": "12_GUIAS_ORALES.md",
+      "title": "Guías para Examen Oral",
+      "unidad": "Examen",
+      "tipo": "guia",
+      "icon": "🎤",
+      "sections": [
+        {
+          "title": "GUÍAS ORALES — Anatomía (UNC)",
+          "level": 1
+        },
+        {
+          "title": "1) Fórmula para responder cualquier pregunta (plantilla)",
+          "level": 2
+        },
+        {
+          "title": "2) Cómo estudiar para oral (método rápido)",
+          "level": 2
+        },
+        {
+          "title": "Lunes a viernes (1–2h)",
+          "level": 3
+        },
+        {
+          "title": "Sábado o domingo (5h)",
+          "level": 3
+        },
+        {
+          "title": "4.1 Huesos",
+          "level": 3
+        },
+        {
+          "title": "4.2 Articulaciones",
+          "level": 3
+        },
+        {
+          "title": "4.3 Músculos",
+          "level": 3
+        },
+        {
+          "title": "4.4 Nervios / Plexos",
+          "level": 3
+        },
+        {
+          "title": "4.5 Vísceras",
+          "level": 3
+        },
+        {
+          "title": "5) Simulacros listos (paquetes de 10 preguntas)",
+          "level": 2
+        },
+        {
+          "title": "Paquete A — Base (huesos + articulaciones)",
+          "level": 3
+        },
+        {
+          "title": "Paquete B — Músculos (alto rendimiento)",
+          "level": 3
+        },
+        {
+          "title": "Paquete C — Neuro + cardio + respi",
+          "level": 3
+        },
+        {
+          "title": "Paquete D — Digestivo + uro + repro",
+          "level": 3
+        },
+        {
+          "title": "6) Regla final",
+          "level": 2
+        }
+      ],
+      "wordCount": 650,
+      "readingTime": 3
+    }
+  ]
+}
