@@ -62,6 +62,63 @@ export interface UserAnswers {
   [questionId: string]: number
 }
 
+// NEW: Study mode types
+export type ConfidenceLevel = 'seguro' | 'duda' | 'noidea'
+
+export interface StudyProgress {
+  [questionId: string]: {
+    userAnswer: number
+    confidence: ConfidenceLevel
+    markedForReview: boolean
+    lastReviewed: string
+    timesReviewed: number
+  }
+}
+
+export interface StudyStats {
+  totalReviewed: number
+  seguro: number
+  duda: number
+  noidea: number
+  markedForReview: number
+}
+
+// NEW: Preferences
+export interface Preferences {
+  theme: 'dark' | 'light'
+  sounds: boolean
+  notifications: boolean
+}
+
+// NEW: Biblioteca types
+export interface BibliotecaSection {
+  title: string
+  level: number
+}
+
+export interface BibliotecaDocument {
+  id: string
+  filename: string
+  title: string
+  unidad: string
+  tipo: 'teoria' | 'resumen' | 'guia' | 'indice'
+  icon: string
+  sections: BibliotecaSection[]
+  wordCount: number
+  readingTime: number
+}
+
+export interface BibliotecaMetadata {
+  totalDocs: number
+  unidades: string[]
+  tipos: string[]
+}
+
+export interface BibliotecaData {
+  metadata: BibliotecaMetadata
+  documents: BibliotecaDocument[]
+}
+
 export interface TemaStats {
   total: number
   answered: number

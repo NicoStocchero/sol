@@ -78,9 +78,136 @@
       transform: translateY(0);
     }
   }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
 /* Light theme overrides */
 .light body {
   @apply bg-gray-50 text-gray-900;
+}
+
+.light .bg-dark-900 {
+  @apply bg-gray-100;
+}
+
+.light .bg-dark-800 {
+  @apply bg-white;
+}
+
+.light .bg-dark-700 {
+  @apply bg-gray-100;
+}
+
+.light .border-dark-700 {
+  @apply border-gray-200;
+}
+
+.light .border-dark-600 {
+  @apply border-gray-300;
+}
+
+.light .text-white {
+  @apply text-gray-900;
+}
+
+.light .text-gray-400 {
+  @apply text-gray-600;
+}
+
+.light .text-gray-300 {
+  @apply text-gray-700;
+}
+
+/* Print styles */
+@media print {
+  .no-print,
+  nav,
+  .no-print * {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+  }
+
+  .print-content {
+    display: block !important;
+    background: white !important;
+    color: black !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .print-content * {
+    color: black !important;
+    background: white !important;
+  }
+
+  .print-content h1,
+  .print-content h2,
+  .print-content h3 {
+    color: black !important;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .print-content table {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  .print-content th,
+  .print-content td {
+    border: 1px solid #ccc !important;
+    padding: 8px !important;
+  }
+
+  .print-content a {
+    text-decoration: none;
+    color: black !important;
+  }
+
+  .print-content ul,
+  .print-content ol {
+    padding-left: 20px;
+  }
+
+  .print-content code {
+    background: #f0f0f0 !important;
+    color: black !important;
+    padding: 2px 4px;
+    border-radius: 3px;
+  }
+
+  @page {
+    margin: 2cm;
+  }
+}
+
+/* Prose styles for markdown content */
+.prose-invert strong {
+  color: white;
+}
+
+.prose-invert em {
+  color: #e2e8f0;
+}
+
+.prose-invert mark {
+  background-color: rgba(233, 69, 96, 0.3);
+  color: #fca5a5;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
 }
