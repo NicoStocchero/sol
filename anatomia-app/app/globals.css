@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-dark-900: #0a0a12;
+    --color-dark-800: #1a1a2e;
+    --color-dark-700: #2d2d44;
+    --color-dark-600: #404060;
+    --color-primary: #e94560;
+    --color-correct: #10b981;
+    --color-incorrect: #ef4444;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-dark-900 text-gray-100 antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-dark-800;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-dark-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-dark-500;
+  }
+}
+
+@layer components {
+  .container-app {
+    @apply max-w-4xl mx-auto px-4 py-6 md:py-8;
+  }
+
+  .page-title {
+    @apply text-2xl md:text-3xl font-bold text-white mb-6;
+  }
+
+  .section-title {
+    @apply text-lg md:text-xl font-semibold text-white mb-4;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-in {
+    animation: animateIn 0.3s ease-out forwards;
+  }
+
+  @keyframes animateIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Light theme overrides */
+.light body {
+  @apply bg-gray-50 text-gray-900;
+}
