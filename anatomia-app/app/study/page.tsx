@@ -1,13 +1,13 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { useAppStore } from '@/lib/store'
 import { StudyQuestionCard, StudyResults } from '@/components'
 import { Footer } from '@/components/Footer'
 import { Card, Button, Badge, ProgressBar } from '@/components/ui'
-import { shuffleArray, getQuestionsWithoutAnswers, filterByTema, filterBySource } from '@/lib/utils'
+import { shuffleArray, getQuestionsWithoutAnswers, filterByTema } from '@/lib/utils'
 import { getStudyProgress, calculateStudyStats } from '@/lib/storage'
-import type { Question } from '@/lib/types'
+import type { Question, StudyProgress } from '@/lib/types'
 
 type FilterType = 'all' | 'tema' | 'source' | 'review'
 
@@ -21,39 +21,64 @@ export default function StudyMode() {
   const [isFinished, setIsFinished] = useState(false)
   const [sessionStats, setSessionStats] = useState({ seguro: 0, duda: 0, noidea: 0, markedForReview: 0 })
 
+  // Use ref to track initialization and prevent infinite loops
+  const isInitialized = useRef(false)
+
+  // Memoize study progress to prevent infinite re-renders
+  const [studyProgressState, setStudyProgressState] = useState<StudyProgress>({})
+
+  // Load study progress only once on mount
+  useEffect(() => {
+    setStudyProgressState(getStudyProgress())
+  }, [])
+
   // Get questions without answers
   const studyQuestions = useMemo(() => {
     if (!data) return []
     return getQuestionsWithoutAnswers(data.questions)
   }, [data])
 
-  // Get existing study progress
-  const studyProgress = getStudyProgress()
-  const existingStats = calculateStudyStats()
+  // Get existing study progress (memoized)
+  const existingStats = useMemo(() => {
+    return calculateStudyStats()
+  }, [studyProgressState])
 
   // Get questions marked for review
   const reviewQuestions = useMemo(() => {
-    return studyQuestions.filter(q => studyProgress[q.id]?.markedForReview)
-  }, [studyQuestions, studyProgress])
+    return studyQuestions.filter(q => studyProgressState[q.id]?.markedForReview)
+  }, [studyQuestions, studyProgressState])
 
-  // Apply filters
+  // Filter by source - fixed to use partial match
+  const filterBySourceFixed = (questions: Question[], sourceId: string): Question[] => {
+    if (!data) return questions
+    const sourceInfo = data.metadata.sources.find(s => s.id === sourceId)
+    if (!sourceInfo) return []
+    // Use partial match since questions have "Preguntero X" but metadata has "X"
+    return questions.filter(q => q.source.toLowerCase().includes(sourceInfo.name.toLowerCase()))
+  }
+
+  // Apply filters - only when filter changes, not on every render
   useEffect(() => {
-    if (!data) return
+    if (!data || !studyQuestions.length) return
+
+    // Prevent running on initial mount before data is ready
+    if (!isInitialized.current) {
+      isInitialized.current = true
+    }
 
     let filtered = studyQuestions
 
     if (filterType === 'tema' && filterValue) {
       filtered = filterByTema(studyQuestions, filterValue)
     } else if (filterType === 'source' && filterValue) {
-      const sourceName = data.metadata.sources.find(s => s.id === filterValue)?.name || ''
-      filtered = filterBySource(studyQuestions, sourceName)
+      filtered = filterBySourceFixed(studyQuestions, filterValue)
     } else if (filterType === 'review') {
       filtered = reviewQuestions
     }
 
     setQuestions(shuffleArray(filtered))
     setCurrentIndex(0)
-  }, [data, filterType, filterValue, studyQuestions, reviewQuestions])
+  }, [data, filterType, filterValue]) // Removed studyQuestions and reviewQuestions from deps
 
   const currentQuestion = questions[currentIndex]
   const totalQuestions = questions.length
@@ -145,7 +170,10 @@ export default function StudyMode() {
       .map(source => ({
         key: source.id,
         name: source.name,
-        count: studyQuestions.filter(q => q.source === source.name).length,
+        // Use partial match: questions have "Preguntero X", metadata has "X"
+        count: studyQuestions.filter(q =>
+          q.source.toLowerCase().includes(source.name.toLowerCase())
+        ).length,
       }))
 
     return (

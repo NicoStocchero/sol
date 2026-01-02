@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useAppStore } from '@/lib/store'
-import { Card, Button, ProgressBar, Badge } from '@/components/ui'
+import { Card, Button, Badge } from '@/components/ui'
 import { Footer } from '@/components'
 import { formatPercentage } from '@/lib/utils'
 import { calculateStudyStats } from '@/lib/storage'
@@ -18,130 +18,143 @@ export default function Dashboard() {
   const answeredCount = Object.keys(progress).length
   const wrongCount = Object.keys(wrongCounts).length
 
-  const quickActions = [
-    {
-      href: '/quiz/random',
-      icon: '🎲',
-      title: 'Quiz Aleatorio',
-      description: '10 preguntas random',
-      color: 'from-purple-500/20 to-pink-500/20',
-    },
-    {
-      href: '/quiz/errors',
-      icon: '❌',
-      title: 'Repasar Errores',
-      description: `${wrongCount} pregunta${wrongCount !== 1 ? 's' : ''}`,
-      color: 'from-red-500/20 to-orange-500/20',
-      disabled: wrongCount === 0,
-    },
-    {
-      href: '/study',
-      icon: '📖',
-      title: 'Modo Estudio',
-      description: `${metadata.withoutAnswers} sin respuesta`,
-      color: 'from-blue-500/20 to-cyan-500/20',
-    },
-    {
-      href: '/quiz',
-      icon: '📝',
-      title: 'Quiz por Tema',
-      description: 'Elige un tema',
-      color: 'from-green-500/20 to-emerald-500/20',
-    },
-    {
-      href: '/biblioteca',
-      icon: '📚',
-      title: 'Biblioteca',
-      description: '23 documentos',
-      color: 'from-amber-500/20 to-yellow-500/20',
-    },
-  ]
-
   return (
     <div className="container-app">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-8 text-center">
         <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
           ¡Hola, {user.name}! 👋
         </h1>
         <p className="text-gray-400">
           {user.streakDays > 1
             ? `🔥 ${user.streakDays} días de racha`
-            : 'Listo para estudiar hoy?'}
+            : '¿Qué querés hacer hoy?'}
         </p>
       </div>
 
-      {/* Progress Overview */}
-      <Card className="mb-6">
-        <h2 className="section-title flex items-center gap-2">
-          <span>📊</span> Tu Progreso
-        </h2>
+      {/* 3 Main Actions - Big and Clear */}
+      <div className="space-y-4 mb-8">
+        {/* QUIZ */}
+        <Link href="/quiz">
+          <div className="bg-gradient-to-r from-pink-600 to-purple-600 rounded-2xl p-6
+                          hover:scale-[1.02] transition-transform cursor-pointer shadow-lg">
+            <div className="flex items-center gap-4">
+              <span className="text-4xl">📝</span>
+              <div className="flex-1">
+                <h2 className="text-xl font-bold text-white">Practicar Quiz</h2>
+                <p className="text-sm text-white/80">
+                  {questionsWithAnswers} preguntas con respuestas verificadas
+                </p>
+              </div>
+              <span className="text-2xl text-white/70">→</span>
+            </div>
+            {answeredCount > 0 && (
+              <div className="mt-3 flex items-center gap-3 text-sm text-white/70">
+                <span>✅ {answeredCount} respondidas</span>
+                <span>•</span>
+                <span>{formatPercentage(stats?.accuracy || 0)} precisión</span>
+                {wrongCount > 0 && (
+                  <>
+                    <span>•</span>
+                    <span className="text-red-200">❌ {wrongCount} a repasar</span>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+        </Link>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div className="text-center p-4 bg-dark-700 rounded-xl">
-            <div className="text-3xl font-bold text-primary-400">
-              {answeredCount}
+        {/* STUDY MODE */}
+        <Link href="/study">
+          <div className="bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl p-6
+                          hover:scale-[1.02] transition-transform cursor-pointer shadow-lg">
+            <div className="flex items-center gap-4">
+              <span className="text-4xl">📖</span>
+              <div className="flex-1">
+                <h2 className="text-xl font-bold text-white">Modo Estudio</h2>
+                <p className="text-sm text-white/80">
+                  {metadata.withoutAnswers} preguntas para practicar sin presión
+                </p>
+              </div>
+              <span className="text-2xl text-white/70">→</span>
             </div>
-            <div className="text-sm text-gray-400">Respondidas</div>
+            {studyStats.totalReviewed > 0 && (
+              <div className="mt-3 flex items-center gap-3 text-sm text-white/70">
+                <span>📚 {studyStats.totalReviewed} revisadas</span>
+                <span>•</span>
+                <span className="text-green-200">✓ {studyStats.seguro} seguras</span>
+                {studyStats.duda > 0 && (
+                  <>
+                    <span>•</span>
+                    <span className="text-yellow-200">? {studyStats.duda} dudas</span>
+                  </>
+                )}
+              </div>
+            )}
           </div>
-          <div className="text-center p-4 bg-dark-700 rounded-xl">
-            <div className="text-3xl font-bold text-correct">
-              {stats?.totalCorrect || 0}
-            </div>
-            <div className="text-sm text-gray-400">Correctas</div>
-          </div>
-          <div className="text-center p-4 bg-dark-700 rounded-xl">
-            <div className="text-3xl font-bold text-incorrect">
-              {wrongCount}
-            </div>
-            <div className="text-sm text-gray-400">A repasar</div>
-          </div>
-          <div className="text-center p-4 bg-dark-700 rounded-xl">
-            <div className="text-3xl font-bold text-white">
-              {formatPercentage(stats?.accuracy || 0)}
-            </div>
-            <div className="text-sm text-gray-400">Precisión</div>
-          </div>
-        </div>
+        </Link>
 
-        <ProgressBar
-          value={answeredCount}
-          max={questionsWithAnswers}
-          showLabel
-          label={`${answeredCount}/${questionsWithAnswers} preguntas con respuesta`}
-          color="primary"
-        />
-      </Card>
-
-      {/* Quick Actions */}
-      <h2 className="section-title">⚡ Acciones Rápidas</h2>
-      <div className="grid grid-cols-2 gap-4 mb-8">
-        {quickActions.map((action) => (
-          <Link
-            key={action.href}
-            href={action.disabled ? '#' : action.href}
-            className={action.disabled ? 'pointer-events-none' : ''}
-          >
-            <Card
-              className={`h-full hover:scale-[1.02] transition-transform bg-gradient-to-br ${action.color} ${
-                action.disabled ? 'opacity-50' : ''
-              }`}
-            >
-              <div className="text-3xl mb-2">{action.icon}</div>
-              <h3 className="font-semibold text-white mb-1">{action.title}</h3>
-              <p className="text-sm text-gray-400">{action.description}</p>
-            </Card>
-          </Link>
-        ))}
+        {/* LIBRARY */}
+        <Link href="/biblioteca">
+          <div className="bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl p-6
+                          hover:scale-[1.02] transition-transform cursor-pointer shadow-lg">
+            <div className="flex items-center gap-4">
+              <span className="text-4xl">📚</span>
+              <div className="flex-1">
+                <h2 className="text-xl font-bold text-white">Leer Apuntes</h2>
+                <p className="text-sm text-white/80">
+                  23 documentos de teoría y resúmenes
+                </p>
+              </div>
+              <span className="text-2xl text-white/70">→</span>
+            </div>
+          </div>
+        </Link>
       </div>
 
-      {/* Topics Overview */}
+      {/* Quick Stats Summary */}
+      <div className="p-4 bg-dark-700/50 rounded-xl mb-6">
+        <div className="grid grid-cols-4 gap-2 text-center text-sm">
+          <div>
+            <div className="text-lg font-bold text-white">{answeredCount}</div>
+            <div className="text-xs text-gray-400">Respondidas</div>
+          </div>
+          <div>
+            <div className="text-lg font-bold text-correct">{stats?.totalCorrect || 0}</div>
+            <div className="text-xs text-gray-400">Correctas</div>
+          </div>
+          <div>
+            <div className="text-lg font-bold text-incorrect">{wrongCount}</div>
+            <div className="text-xs text-gray-400">A repasar</div>
+          </div>
+          <div>
+            <div className="text-lg font-bold text-primary-400">{formatPercentage(stats?.accuracy || 0)}</div>
+            <div className="text-xs text-gray-400">Precisión</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Quick Error Repair Button (if there are errors) */}
+      {wrongCount > 0 && (
+        <Link href="/quiz/errors">
+          <Card className="mb-6 bg-gradient-to-br from-red-500/20 to-orange-500/20 hover:scale-[1.01] transition-transform cursor-pointer">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">❌</span>
+              <div className="flex-1">
+                <p className="font-medium text-white">Repasar errores</p>
+                <p className="text-sm text-gray-400">{wrongCount} pregunta{wrongCount !== 1 ? 's' : ''} para revisar</p>
+              </div>
+              <Badge variant="error">{wrongCount}</Badge>
+            </div>
+          </Card>
+        </Link>
+      )}
+
+      {/* Topics to Review (only if user has data) */}
       {stats && stats.weakestTemas.length > 0 && (
         <Card className="mb-6">
-          <h2 className="section-title flex items-center gap-2">
-            <span>🎯</span> Temas a Repasar
-          </h2>
-          <div className="space-y-3">
+          <h3 className="text-sm font-semibold text-gray-400 mb-3">🎯 Temas a mejorar</h3>
+          <div className="space-y-2">
             {stats.weakestTemas.slice(0, 3).map((tema) => {
               const temaInfo = metadata.temas[tema]
               const temaStat = stats.temaStats[tema]
@@ -149,27 +162,15 @@ export default function Dashboard() {
                 <Link
                   key={tema}
                   href={`/quiz/tema-${tema}`}
-                  className="flex items-center justify-between p-3 bg-dark-700 rounded-xl hover:bg-dark-600 transition-colors"
+                  className="flex items-center justify-between p-2 bg-dark-700 rounded-lg hover:bg-dark-600 transition-colors"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">{temaInfo?.icon || '📚'}</span>
-                    <div>
-                      <p className="font-medium text-white">
-                        {temaInfo?.name || tema}
-                      </p>
-                      <p className="text-xs text-gray-400">
-                        {temaStat.answered} respondidas
-                      </p>
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <span>{temaInfo?.icon || '📚'}</span>
+                    <span className="text-sm text-white">{temaInfo?.name || tema}</span>
                   </div>
                   <Badge
-                    variant={
-                      temaStat.accuracy >= 70
-                        ? 'success'
-                        : temaStat.accuracy >= 50
-                        ? 'warning'
-                        : 'error'
-                    }
+                    size="sm"
+                    variant={temaStat.accuracy >= 70 ? 'success' : temaStat.accuracy >= 50 ? 'warning' : 'error'}
                   >
                     {formatPercentage(temaStat.accuracy)}
                   </Badge>
@@ -177,56 +178,14 @@ export default function Dashboard() {
               )
             })}
           </div>
-          <Link href="/stats" className="block mt-4">
-            <Button variant="ghost" className="w-full">
-              Ver todas las estadísticas →
-            </Button>
-          </Link>
         </Card>
       )}
 
-      {/* Study Progress */}
-      {studyStats.totalReviewed > 0 && (
-        <Card className="mb-6">
-          <h2 className="section-title flex items-center gap-2">
-            <span>📖</span> Progreso de Estudio
-          </h2>
-          <div className="grid grid-cols-4 gap-3 mb-4">
-            <div className="text-center p-3 bg-dark-700 rounded-xl">
-              <div className="text-2xl font-bold text-white">{studyStats.totalReviewed}</div>
-              <div className="text-xs text-gray-400">Revisadas</div>
-            </div>
-            <div className="text-center p-3 bg-correct/10 rounded-xl border border-correct/30">
-              <div className="text-2xl font-bold text-correct">{studyStats.seguro}</div>
-              <div className="text-xs text-gray-400">Seguras</div>
-            </div>
-            <div className="text-center p-3 bg-yellow-500/10 rounded-xl border border-yellow-500/30">
-              <div className="text-2xl font-bold text-yellow-400">{studyStats.duda}</div>
-              <div className="text-xs text-gray-400">Dudas</div>
-            </div>
-            <div className="text-center p-3 bg-incorrect/10 rounded-xl border border-incorrect/30">
-              <div className="text-2xl font-bold text-incorrect">{studyStats.noidea}</div>
-              <div className="text-xs text-gray-400">Sin idea</div>
-            </div>
-          </div>
-          <ProgressBar
-            value={studyStats.totalReviewed}
-            max={metadata.withoutAnswers}
-            showLabel
-            label={`${studyStats.totalReviewed}/${metadata.withoutAnswers} estudiadas`}
-            color="primary"
-          />
-        </Card>
-      )}
-
-      {/* Data Info */}
-      <Card variant="outlined" className="text-center">
-        <p className="text-gray-400 text-sm">
-          📚 {metadata.totalQuestions} preguntas totales • ✅{' '}
-          {metadata.withAnswers} con respuesta • 📖 {metadata.withoutAnswers}{' '}
-          para estudio
-        </p>
-      </Card>
+      {/* Secondary Links */}
+      <div className="flex justify-center gap-6 text-sm text-gray-500 mb-4">
+        <Link href="/stats" className="hover:text-white transition-colors">📊 Estadísticas</Link>
+        <Link href="/settings" className="hover:text-white transition-colors">⚙️ Configuración</Link>
+      </div>
 
       <Footer />
     </div>
