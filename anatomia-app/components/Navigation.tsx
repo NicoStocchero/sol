@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAppStore } from '@/lib/store'
+import { GlobalSearch } from './GlobalSearch'
 
 const navItems = [
   { href: '/', label: 'Inicio', icon: '🏠' },
@@ -58,13 +59,16 @@ export function Navigation() {
             ))}
           </div>
 
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-lg hover:bg-dark-700 transition-colors"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? '🌙' : '☀️'}
-          </button>
+          <div className="flex items-center gap-2">
+            <GlobalSearch />
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg hover:bg-dark-700 transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? '🌙' : '☀️'}
+            </button>
+          </div>
         </div>
       </nav>
 
