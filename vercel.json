@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd anatomia-app && npm run build",
+  "outputDirectory": "anatomia-app/.next",
+  "installCommand": "cd anatomia-app && npm install",
+  "framework": "nextjs"
+}
