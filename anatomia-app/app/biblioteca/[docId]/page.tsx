@@ -3,8 +3,8 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import ReactMarkdown from 'react-markdown'
 import { Card, Button, Badge } from '@/components/ui'
+import { MarkdownRenderer } from '@/components/MarkdownRenderer'
 import { Footer } from '@/components/Footer'
 import { addBibliotecaHistory } from '@/lib/storage'
 import bibliotecaData from '@/biblioteca_index.json'
@@ -155,43 +155,7 @@ export default function DocumentPage() {
             <p className="text-gray-400">Cargando documento...</p>
           </div>
         ) : (
-          <article className="prose prose-invert prose-lg max-w-none
-            prose-headings:text-white prose-headings:font-bold
-            prose-h1:text-2xl prose-h1:border-b prose-h1:border-dark-600 prose-h1:pb-2 prose-h1:mb-4
-            prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-4
-            prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-3
-            prose-p:text-gray-300 prose-p:leading-relaxed
-            prose-strong:text-white
-            prose-ul:text-gray-300 prose-ol:text-gray-300
-            prose-li:my-1
-            prose-table:border-collapse prose-table:w-full
-            prose-th:bg-dark-700 prose-th:text-white prose-th:p-2 prose-th:border prose-th:border-dark-600
-            prose-td:p-2 prose-td:border prose-td:border-dark-600 prose-td:text-gray-300
-            prose-code:bg-dark-700 prose-code:px-1 prose-code:rounded prose-code:text-primary-400
-            prose-blockquote:border-l-4 prose-blockquote:border-primary-500 prose-blockquote:pl-4 prose-blockquote:italic
-          ">
-            <ReactMarkdown
-              components={{
-                h1: ({ children, ...props }) => (
-                  <h1 id={String(children).replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()} {...props}>
-                    {children}
-                  </h1>
-                ),
-                h2: ({ children, ...props }) => (
-                  <h2 id={String(children).replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()} {...props}>
-                    {children}
-                  </h2>
-                ),
-                h3: ({ children, ...props }) => (
-                  <h3 id={String(children).replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()} {...props}>
-                    {children}
-                  </h3>
-                ),
-              }}
-            >
-              {content}
-            </ReactMarkdown>
-          </article>
+          <MarkdownRenderer content={content} />
         )}
       </Card>
 
