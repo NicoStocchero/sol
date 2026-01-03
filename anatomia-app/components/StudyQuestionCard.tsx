@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { Question, ConfidenceLevel } from '@/lib/types'
 import { Card, Button, Badge } from '@/components/ui'
 import { setStudyQuestionProgress, getStudyProgress } from '@/lib/storage'
@@ -20,13 +20,33 @@ export function StudyQuestionCard({
   onNext,
   onPrevious,
 }: StudyQuestionCardProps) {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
-  const [showConfidence, setShowConfidence] = useState(false)
-  const [hasAnswered, setHasAnswered] = useState(false)
-  const [markedForReview, setMarkedForReview] = useState(false)
-
   const studyProgress = getStudyProgress()
   const previousProgress = studyProgress[question.id]
+
+  // Initialize state with previous progress if it exists
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(
+    previousProgress?.userAnswer ?? null
+  )
+  const [currentConfidence, setCurrentConfidence] = useState<ConfidenceLevel | null>(
+    previousProgress?.confidence ?? null
+  )
+  const [showConfidence, setShowConfidence] = useState(false)
+  const [hasAnswered, setHasAnswered] = useState(!!previousProgress)
+  const [markedForReview, setMarkedForReview] = useState(
+    previousProgress?.markedForReview ?? false
+  )
+
+  // Reset state when question changes
+  useEffect(() => {
+    const progress = getStudyProgress()
+    const prevProgress = progress[question.id]
+
+    setSelectedIndex(prevProgress?.userAnswer ?? null)
+    setCurrentConfidence(prevProgress?.confidence ?? null)
+    setShowConfidence(false)
+    setHasAnswered(!!prevProgress)
+    setMarkedForReview(prevProgress?.markedForReview ?? false)
+  }, [question.id])
 
   const handleOptionClick = (index: number) => {
     if (hasAnswered) return
@@ -41,22 +61,24 @@ export function StudyQuestionCard({
   const handleConfidence = (confidence: ConfidenceLevel) => {
     if (selectedIndex === null) return
     setStudyQuestionProgress(question.id, selectedIndex, confidence, markedForReview)
+    setCurrentConfidence(confidence)
     setHasAnswered(true)
   }
 
-  const handleNext = () => {
-    setSelectedIndex(null)
-    setShowConfidence(false)
+  // Allow changing answer
+  const handleChangeAnswer = () => {
     setHasAnswered(false)
-    setMarkedForReview(false)
+    setShowConfidence(false)
+    setCurrentConfidence(null)
+  }
+
+  const handleNext = () => {
+    // State will be reset by useEffect when question.id changes
     onNext()
   }
 
   const handlePrevious = () => {
-    setSelectedIndex(null)
-    setShowConfidence(false)
-    setHasAnswered(false)
-    setMarkedForReview(false)
+    // State will be reset by useEffect when question.id changes
     onPrevious?.()
   }
 
@@ -171,17 +193,27 @@ export function StudyQuestionCard({
       {/* Result after answering */}
       {hasAnswered && (
         <div className="p-4 rounded-xl mb-6 bg-dark-700 border border-dark-600 animate-fade-in">
-          <p className="text-white mb-2">
-            Tu respuesta: <strong className="text-primary-400">{String.fromCharCode(65 + (selectedIndex ?? 0))}</strong>
-          </p>
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-white">
+              Tu respuesta: <strong className="text-primary-400">{String.fromCharCode(65 + (selectedIndex ?? 0))}</strong>
+            </p>
+            {currentConfidence && (
+              <Badge variant={currentConfidence === 'seguro' ? 'success' : currentConfidence === 'duda' ? 'warning' : 'error'}>
+                {currentConfidence === 'seguro' && '✅ Segura'}
+                {currentConfidence === 'duda' && '🤔 Con dudas'}
+                {currentConfidence === 'noidea' && '❓ Sin idea'}
+              </Badge>
+            )}
+          </div>
           {markedForReview && (
             <p className="text-yellow-400 text-sm">📌 Marcada para verificar con el libro</p>
           )}
-          {previousProgress && previousProgress.userAnswer !== selectedIndex && (
-            <p className="text-gray-400 text-sm mt-2">
-              Antes habías elegido: <strong>{String.fromCharCode(65 + previousProgress.userAnswer)}</strong>
-            </p>
-          )}
+          <button
+            onClick={handleChangeAnswer}
+            className="text-sm text-primary-400 hover:text-primary-300 mt-2 underline"
+          >
+            Cambiar respuesta
+          </button>
         </div>
       )}
 

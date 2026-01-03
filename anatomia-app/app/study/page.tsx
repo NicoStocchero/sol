@@ -6,10 +6,10 @@ import { StudyQuestionCard, StudyResults } from '@/components'
 import { Footer } from '@/components/Footer'
 import { Card, Button, Badge, ProgressBar } from '@/components/ui'
 import { shuffleArray, getQuestionsWithoutAnswers, filterByTema } from '@/lib/utils'
-import { getStudyProgress, calculateStudyStats } from '@/lib/storage'
-import type { Question, StudyProgress } from '@/lib/types'
+import { getStudyProgress, calculateStudyStats, getQuestionIdsByConfidence } from '@/lib/storage'
+import type { Question, StudyProgress, ConfidenceLevel } from '@/lib/types'
 
-type FilterType = 'all' | 'tema' | 'source' | 'review'
+type FilterType = 'all' | 'tema' | 'source' | 'review' | 'seguro' | 'duda' | 'noidea'
 
 export default function StudyMode() {
   const { data } = useAppStore()
@@ -48,6 +48,19 @@ export default function StudyMode() {
     return studyQuestions.filter(q => studyProgressState[q.id]?.markedForReview)
   }, [studyQuestions, studyProgressState])
 
+  // Get questions by confidence level
+  const seguroQuestions = useMemo(() => {
+    return studyQuestions.filter(q => studyProgressState[q.id]?.confidence === 'seguro')
+  }, [studyQuestions, studyProgressState])
+
+  const dudaQuestions = useMemo(() => {
+    return studyQuestions.filter(q => studyProgressState[q.id]?.confidence === 'duda')
+  }, [studyQuestions, studyProgressState])
+
+  const noideaQuestions = useMemo(() => {
+    return studyQuestions.filter(q => studyProgressState[q.id]?.confidence === 'noidea')
+  }, [studyQuestions, studyProgressState])
+
   // Filter by source - fixed to use partial match
   const filterBySourceFixed = (questions: Question[], sourceId: string): Question[] => {
     if (!data) return questions
@@ -74,6 +87,12 @@ export default function StudyMode() {
       filtered = filterBySourceFixed(studyQuestions, filterValue)
     } else if (filterType === 'review') {
       filtered = reviewQuestions
+    } else if (filterType === 'seguro') {
+      filtered = seguroQuestions
+    } else if (filterType === 'duda') {
+      filtered = dudaQuestions
+    } else if (filterType === 'noidea') {
+      filtered = noideaQuestions
     }
 
     setQuestions(shuffleArray(filtered))
@@ -257,6 +276,45 @@ export default function StudyMode() {
               </Button>
             )}
           </div>
+
+          {/* Filter by confidence level */}
+          {existingStats.totalReviewed > 0 && (
+            <div className="mb-4">
+              <p className="text-sm text-gray-400 mb-2">Filtrar por nivel de confianza:</p>
+              <div className="flex flex-wrap gap-2">
+                {seguroQuestions.length > 0 && (
+                  <Button
+                    variant={filterType === 'seguro' ? 'primary' : 'outline'}
+                    size="sm"
+                    onClick={() => setFilterType('seguro')}
+                    className={filterType === 'seguro' ? '' : 'border-correct text-correct hover:bg-correct/20'}
+                  >
+                    ✅ Seguras ({seguroQuestions.length})
+                  </Button>
+                )}
+                {dudaQuestions.length > 0 && (
+                  <Button
+                    variant={filterType === 'duda' ? 'primary' : 'outline'}
+                    size="sm"
+                    onClick={() => setFilterType('duda')}
+                    className={filterType === 'duda' ? '' : 'border-yellow-400 text-yellow-400 hover:bg-yellow-400/20'}
+                  >
+                    🤔 Con dudas ({dudaQuestions.length})
+                  </Button>
+                )}
+                {noideaQuestions.length > 0 && (
+                  <Button
+                    variant={filterType === 'noidea' ? 'primary' : 'outline'}
+                    size="sm"
+                    onClick={() => setFilterType('noidea')}
+                    className={filterType === 'noidea' ? '' : 'border-incorrect text-incorrect hover:bg-incorrect/20'}
+                  >
+                    ❓ Sin idea ({noideaQuestions.length})
+                  </Button>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Tema selector */}
           {filterType === 'tema' && (

@@ -215,6 +215,14 @@ export function calculateStudyStats() {
   }
 }
 
+// Get question IDs by confidence level
+export function getQuestionIdsByConfidence(confidence: ConfidenceLevel): string[] {
+  const progress = getStudyProgress()
+  return Object.entries(progress)
+    .filter(([, entry]) => entry.confidence === confidence)
+    .map(([id]) => id)
+}
+
 // NEW: Preferences
 export function getPreferences(): Preferences {
   return safeGet<Preferences>(KEYS.PREFERENCES, {
