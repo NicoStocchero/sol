@@ -60,6 +60,13 @@ export function Navigation() {
           </div>
 
           <div className="flex items-center gap-2">
+            <Link
+              href="/dulce"
+              className="p-2 rounded-lg hover:bg-dark-700 transition-colors text-lg"
+              title="Dulce Control"
+            >
+              🧁
+            </Link>
             <GlobalSearch />
             <button
               onClick={toggleTheme}
