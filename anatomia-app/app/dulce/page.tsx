@@ -33,605 +33,535 @@ function save(key: string, val: unknown) {
   try { localStorage.setItem(key, JSON.stringify(val)) } catch {}
 }
 
-// ─── PIN Lock Screen ───────────────────────────────────────
-function PinScreen({ onUnlock }: { onUnlock: () => void }) {
+// ── PIN SCREEN ──────────────────────────────────────────────
+function PinScreen({ onSuccess }: { onSuccess: () => void }) {
   const [pin, setPin] = useState('')
-  const [error, setError] = useState(false)
+  const [shake, setShake] = useState(false)
+  const [hint, setHint] = useState('')
 
-  const handleSubmit = () => {
-    if (pin === ACCESS_PIN) {
-      save(KEYS.AUTH, { ts: Date.now() })
-      onUnlock()
-    } else {
-      setError(true)
-      setPin('')
-      setTimeout(() => setError(false), 1500)
+  const press = (d: string) => {
+    if (pin.length >= 6) return
+    const next = pin + d
+    setPin(next)
+    if (next.length === ACCESS_PIN.length) {
+      if (next === ACCESS_PIN) {
+        save(KEYS.AUTH, { ok: true, ts: Date.now() })
+        onSuccess()
+      } else {
+        setShake(true)
+        setHint('PIN incorrecto')
+        setTimeout(() => { setShake(false); setPin(''); setHint('') }, 800)
+      }
     }
   }
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 to-purple-50 dark:from-dark-900 dark:to-dark-800 p-4">
-      <div className="bg-white dark:bg-dark-800 rounded-2xl shadow-xl p-8 w-full max-w-sm text-center border border-gray-200 dark:border-dark-600">
-        <div className="text-5xl mb-4">🧁</div>
-        <h1 className="text-2xl font-bold mb-2 text-gray-800 dark:text-white">Dulce Control</h1>
-        <p className="text-gray-500 dark:text-gray-400 text-sm mb-6">Ingresa tu PIN para acceder</p>
-        <input
-          type="password"
-          inputMode="numeric"
-          maxLength={8}
-          value={pin}
-          onChange={e => setPin(e.target.value.replace(/\D/g, ''))}
-          onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-          placeholder="••••"
-          className={`w-full text-center text-2xl tracking-[0.5em] p-3 rounded-xl border-2 mb-4 outline-none transition-colors bg-gray-50 dark:bg-dark-700 text-gray-800 dark:text-white ${
-            error ? 'border-red-400 animate-shake' : 'border-gray-200 dark:border-dark-500 focus:border-pink-400'
-          }`}
-        />
-        <button
-          onClick={handleSubmit}
-          className="w-full py-3 rounded-xl bg-pink-500 hover:bg-pink-600 text-white font-semibold transition-colors"
-        >
-          Entrar
-        </button>
-        {error && <p className="text-red-500 text-sm mt-3">PIN incorrecto</p>}
-        <Link href="/" className="block mt-4 text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-          ← Volver al inicio
-        </Link>
-      </div>
-    </div>
-  )
-}
-
-// ─── Sale Form ─────────────────────────────────────────────
-function SaleForm({ products, onAdd }: { products: Product[]; onAdd: (s: Sale) => void }) {
-  const [productId, setProductId] = useState('')
-  const [qty, setQty] = useState(1)
-
-  const product = products.find(p => p.id === productId)
-
-  const handleAdd = () => {
-    if (!product || qty < 1) return
-    const sale: Sale = {
-      id: crypto.randomUUID(),
-      productId: product.id,
-      productName: product.name,
-      quantity: qty,
-      revenue: product.price * qty,
-      cost: product.cost * qty,
-      profit: (product.price - product.cost) * qty,
-      date: new Date().toISOString(),
-    }
-    onAdd(sale)
-    setQty(1)
-  }
+  const del = () => setPin(p => p.slice(0, -1))
 
   return (
-    <div className="bg-white dark:bg-dark-800 rounded-xl p-4 border border-gray-200 dark:border-dark-600 mb-4">
-      <h3 className="font-semibold text-gray-800 dark:text-white mb-3">➕ Registrar venta</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <select
-          value={productId}
-          onChange={e => setProductId(e.target.value)}
-          className="p-2 rounded-lg border border-gray-200 dark:border-dark-500 bg-gray-50 dark:bg-dark-700 text-gray-800 dark:text-white"
-        >
-          <option value="">Seleccionar producto...</option>
-          {products.map(p => (
-            <option key={p.id} value={p.id}>{p.emoji} {p.name} — {fmt(p.price)}</option>
-          ))}
-        </select>
-        <input
-          type="number"
-          min={1}
-          value={qty}
-          onChange={e => setQty(Math.max(1, parseInt(e.target.value) || 1))}
-          className="p-2 rounded-lg border border-gray-200 dark:border-dark-500 bg-gray-50 dark:bg-dark-700 text-gray-800 dark:text-white"
-          placeholder="Cantidad"
-        />
-        <button
-          onClick={handleAdd}
-          disabled={!product}
-          className="py-2 px-4 rounded-lg bg-green-500 hover:bg-green-600 disabled:opacity-40 text-white font-medium transition-colors"
-        >
-          Agregar venta
-        </button>
-      </div>
-      {product && (
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-          Total: {fmt(product.price * qty)} | Ganancia: {fmt((product.price - product.cost) * qty)}
-        </p>
-      )}
-    </div>
-  )
-}
+    <div style={{
+      minHeight: '100vh', display: 'flex', flexDirection: 'column',
+      alignItems: 'center', justifyContent: 'center',
+      background: 'linear-gradient(135deg, #1a0a10 0%, #2d1020 50%, #1a0a10 100%)',
+      fontFamily: "'DM Sans', system-ui, sans-serif",
+    }}>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;700&display=swap'); .pin-btn { width:72px;height:72px;border-radius:50%;border:1.5px solid rgba(232,71,106,0.3);background:rgba(232,71,106,0.08); color:white;font-size:22px;font-weight:700;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif; } .pin-btn:hover { background:rgba(232,71,106,0.2);border-color:rgba(232,71,106,0.6);transform:scale(1.05); } .pin-btn:active { transform:scale(0.95); } @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-8px)} 40%,80%{transform:translateX(8px)} } .shake { animation: shake .4s ease; }`}</style>
 
-// ─── Expense Form ──────────────────────────────────────────
-function ExpenseForm({ products, onAdd }: { products: Product[]; onAdd: (e: Expense) => void }) {
-  const [desc, setDesc] = useState('')
-  const [amount, setAmount] = useState('')
-  const [type, setType] = useState<'Insumo' | 'General'>('General')
-  const [related, setRelated] = useState('')
-
-  const handleAdd = () => {
-    if (!desc.trim() || !amount) return
-    onAdd({
-      id: crypto.randomUUID(),
-      description: desc.trim(),
-      amount: parseFloat(amount),
-      type,
-      relatedProduct: related,
-      date: new Date().toISOString(),
-    })
-    setDesc('')
-    setAmount('')
-    setRelated('')
-  }
-
-  return (
-    <div className="bg-white dark:bg-dark-800 rounded-xl p-4 border border-gray-200 dark:border-dark-600 mb-4">
-      <h3 className="font-semibold text-gray-800 dark:text-white mb-3">➕ Registrar gasto</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <input
-          value={desc}
-          onChange={e => setDesc(e.target.value)}
-          placeholder="Descripción del gasto"
-          className="p-2 rounded-lg border border-gray-200 dark:border-dark-500 bg-gray-50 dark:bg-dark-700 text-gray-800 dark:text-white"
-        />
-        <input
-          type="number"
-          min={0}
-          step={0.01}
-          value={amount}
-          onChange={e => setAmount(e.target.value)}
-          placeholder="Monto ($)"
-          className="p-2 rounded-lg border border-gray-200 dark:border-dark-500 bg-gray-50 dark:bg-dark-700 text-gray-800 dark:text-white"
-        />
-        <select
-          value={type}
-          onChange={e => setType(e.target.value as 'Insumo' | 'General')}
-          className="p-2 rounded-lg border border-gray-200 dark:border-dark-500 bg-gray-50 dark:bg-dark-700 text-gray-800 dark:text-white"
-        >
-          <option value="General">General</option>
-          <option value="Insumo">Insumo</option>
-        </select>
-        <select
-          value={related}
-          onChange={e => setRelated(e.target.value)}
-          className="p-2 rounded-lg border border-gray-200 dark:border-dark-500 bg-gray-50 dark:bg-dark-700 text-gray-800 dark:text-white"
-        >
-          <option value="">Producto relacionado (opcional)</option>
-          {products.map(p => (
-            <option key={p.id} value={p.id}>{p.emoji} {p.name}</option>
-          ))}
-        </select>
-      </div>
-      <button
-        onClick={handleAdd}
-        disabled={!desc.trim() || !amount}
-        className="mt-3 py-2 px-4 rounded-lg bg-red-500 hover:bg-red-600 disabled:opacity-40 text-white font-medium transition-colors"
-      >
-        Agregar gasto
-      </button>
-    </div>
-  )
-}
-
-// ─── Product Form ──────────────────────────────────────────
-function ProductForm({ onAdd }: { onAdd: (p: Product) => void }) {
-  const [name, setName] = useState('')
-  const [cost, setCost] = useState('')
-  const [price, setPrice] = useState('')
-  const [emoji, setEmoji] = useState(EMOJIS[0])
-
-  const handleAdd = () => {
-    if (!name.trim() || !cost || !price) return
-    onAdd({
-      id: crypto.randomUUID(),
-      name: name.trim(),
-      cost: parseFloat(cost),
-      price: parseFloat(price),
-      emoji,
-    })
-    setName('')
-    setCost('')
-    setPrice('')
-  }
-
-  return (
-    <div className="bg-white dark:bg-dark-800 rounded-xl p-4 border border-gray-200 dark:border-dark-600 mb-4">
-      <h3 className="font-semibold text-gray-800 dark:text-white mb-3">➕ Nuevo producto</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <input
-          value={name}
-          onChange={e => setName(e.target.value)}
-          placeholder="Nombre del producto"
-          className="p-2 rounded-lg border border-gray-200 dark:border-dark-500 bg-gray-50 dark:bg-dark-700 text-gray-800 dark:text-white"
-        />
-        <div className="flex gap-2">
-          <select
-            value={emoji}
-            onChange={e => setEmoji(e.target.value)}
-            className="p-2 rounded-lg border border-gray-200 dark:border-dark-500 bg-gray-50 dark:bg-dark-700 text-lg"
-          >
-            {EMOJIS.map(e => <option key={e} value={e}>{e}</option>)}
-          </select>
-          <input
-            type="number"
-            min={0}
-            step={0.01}
-            value={cost}
-            onChange={e => setCost(e.target.value)}
-            placeholder="Costo"
-            className="flex-1 p-2 rounded-lg border border-gray-200 dark:border-dark-500 bg-gray-50 dark:bg-dark-700 text-gray-800 dark:text-white"
-          />
-          <input
-            type="number"
-            min={0}
-            step={0.01}
-            value={price}
-            onChange={e => setPrice(e.target.value)}
-            placeholder="Precio venta"
-            className="flex-1 p-2 rounded-lg border border-gray-200 dark:border-dark-500 bg-gray-50 dark:bg-dark-700 text-gray-800 dark:text-white"
-          />
+      <div style={{ textAlign: 'center', marginBottom: 40 }}>
+        <div style={{ fontSize: 52, marginBottom: 12 }}>🧁</div>
+        <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 28, fontWeight: 900, color: '#e8476a', marginBottom: 6 }}>
+          Dulce Control
+        </div>
+        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', fontWeight: 500 }}>
+          Ingresá tu PIN para continuar
         </div>
       </div>
-      {cost && price && (
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-          Margen: {fmt(parseFloat(price) - parseFloat(cost))} ({(((parseFloat(price) - parseFloat(cost)) / parseFloat(price)) * 100).toFixed(0)}%)
-        </p>
-      )}
-      <button
-        onClick={handleAdd}
-        disabled={!name.trim() || !cost || !price}
-        className="mt-3 py-2 px-4 rounded-lg bg-pink-500 hover:bg-pink-600 disabled:opacity-40 text-white font-medium transition-colors"
-      >
-        Agregar producto
-      </button>
+
+      {/* Dots */}
+      <div className={shake ? 'shake' : ''} style={{ display: 'flex', gap: 14, marginBottom: 8 }}>
+        {Array.from({ length: ACCESS_PIN.length }).map((_, i) => (
+          <div key={i} style={{
+            width: 14, height: 14, borderRadius: '50%',
+            background: i < pin.length ? '#e8476a' : 'rgba(255,255,255,0.15)',
+            transition: 'background .15s',
+            boxShadow: i < pin.length ? '0 0 10px rgba(232,71,106,0.6)' : 'none',
+          }} />
+        ))}
+      </div>
+      <div style={{ height: 20, fontSize: 12, color: '#e8476a', marginBottom: 28, fontWeight: 600 }}>{hint}</div>
+
+      {/* Numpad */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 72px)', gap: 14 }}>
+        {[1,2,3,4,5,6,7,8,9].map(n => (
+          <button key={n} className="pin-btn" onClick={() => press(String(n))}>{n}</button>
+        ))}
+        <div />
+        <button className="pin-btn" onClick={() => press('0')}>0</button>
+        <button className="pin-btn" onClick={del} style={{ fontSize: 18 }}>⌫</button>
+      </div>
+
+      <Link href="/" style={{ marginTop: 40, fontSize: 12, color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>
+        ← Volver a SolStudy
+      </Link>
     </div>
   )
 }
 
-// ─── Main Dulce Page ───────────────────────────────────────
+// ── MAIN APP ─────────────────────────────────────────────────
 export default function DulcePage() {
   const [authed, setAuthed] = useState(false)
-  const [loaded, setLoaded] = useState(false)
-  const [tab, setTab] = useState<Tab>('ventas')
-  const [products, setProducts] = useState<Product[]>([])
-  const [sales, setSales] = useState<Sale[]>([])
-  const [expenses, setExpenses] = useState<Expense[]>([])
-  const [goal, setGoal] = useState(0)
-  const [notes, setNotes] = useState('')
+  const [checking, setChecking] = useState(true)
 
-  // Load from localStorage
   useEffect(() => {
-    const auth = load<{ ts: number } | null>(KEYS.AUTH, null)
-    // Session valid for 24 hours
-    if (auth && Date.now() - auth.ts < 86400000) {
-      setAuthed(true)
+    const stored = load<{ ok: boolean; ts: number } | null>(KEYS.AUTH, null)
+    if (stored?.ok) {
+      const age = Date.now() - (stored.ts || 0)
+      if (age < 1000 * 60 * 60 * 24 * 30) { setAuthed(true) } // 30 días
     }
-    setProducts(load<Product[]>(KEYS.PRODUCTS, []))
-    setSales(load<Sale[]>(KEYS.SALES, []))
-    setExpenses(load<Expense[]>(KEYS.EXPENSES, []))
-    setGoal(load<number>(KEYS.GOAL, 0))
-    setNotes(load<string>(KEYS.NOTES, ''))
-    setLoaded(true)
+    setChecking(false)
   }, [])
 
-  // Persist on changes
-  useEffect(() => { if (loaded) save(KEYS.PRODUCTS, products) }, [products, loaded])
-  useEffect(() => { if (loaded) save(KEYS.SALES, sales) }, [sales, loaded])
-  useEffect(() => { if (loaded) save(KEYS.EXPENSES, expenses) }, [expenses, loaded])
-  useEffect(() => { if (loaded) save(KEYS.GOAL, goal) }, [goal, loaded])
-  useEffect(() => { if (loaded) save(KEYS.NOTES, notes) }, [notes, loaded])
+  if (checking) return null
+  if (!authed) return <PinScreen onSuccess={() => setAuthed(true)} />
+  return <DulceApp onLock={() => { save(KEYS.AUTH, null); setAuthed(false) }} />
+}
 
-  const addSale = useCallback((s: Sale) => setSales(prev => [s, ...prev]), [])
-  const addExpense = useCallback((e: Expense) => setExpenses(prev => [e, ...prev]), [])
-  const addProduct = useCallback((p: Product) => setProducts(prev => [...prev, p]), [])
+// ── DULCE APP ─────────────────────────────────────────────────
+function DulceApp({ onLock }: { onLock: () => void }) {
+  const [tab, setTab] = useState<Tab>('ventas')
+  const [products, setProducts] = useState<Product[]>(() => load(KEYS.PRODUCTS, []))
+  const [sales, setSales] = useState<Sale[]>(() => load(KEYS.SALES, []))
+  const [expenses, setExpenses] = useState<Expense[]>(() => load(KEYS.EXPENSES, []))
+  const [goal, setGoal] = useState<number>(() => load(KEYS.GOAL, 0))
+  const [notes, setNotes] = useState<string>(() => load(KEYS.NOTES, ''))
+  const [toast, setToast] = useState('')
+  const [dateStart, setDateStart] = useState('')
+  const [dateEnd, setDateEnd] = useState('')
 
-  const deleteSale = useCallback((id: string) => setSales(prev => prev.filter(s => s.id !== id)), [])
-  const deleteExpense = useCallback((id: string) => setExpenses(prev => prev.filter(e => e.id !== id)), [])
-  const deleteProduct = useCallback((id: string) => setProducts(prev => prev.filter(p => p.id !== id)), [])
+  // Persist
+  useEffect(() => { save(KEYS.PRODUCTS, products) }, [products])
+  useEffect(() => { save(KEYS.SALES, sales) }, [sales])
+  useEffect(() => { save(KEYS.EXPENSES, expenses) }, [expenses])
+  useEffect(() => { save(KEYS.GOAL, goal) }, [goal])
+  useEffect(() => { save(KEYS.NOTES, notes) }, [notes])
 
-  const handleLogout = () => {
-    localStorage.removeItem(KEYS.AUTH)
-    setAuthed(false)
+  const showToast = useCallback((msg: string) => {
+    setToast(msg)
+    setTimeout(() => setToast(''), 2200)
+  }, [])
+
+  const filterDate = useCallback((arr: (Sale | Expense)[]) => {
+    return arr.filter(i => {
+      const d = new Date(i.date).setHours(0, 0, 0, 0)
+      const s = dateStart ? new Date(dateStart).setHours(0, 0, 0, 0) : null
+      const e = dateEnd ? new Date(dateEnd).setHours(0, 0, 0, 0) : null
+      return (!s || d >= s) && (!e || d <= e)
+    }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  }, [dateStart, dateEnd])
+
+  const filteredSales = filterDate(sales) as Sale[]
+  const filteredExpenses = filterDate(expenses) as Expense[]
+
+  // ── Resumen numbers ──
+  const rev = filteredSales.reduce((a, b) => a + b.revenue, 0)
+  const costo = filteredSales.reduce((a, b) => a + b.cost, 0)
+  const gastos = filteredExpenses.reduce((a, b) => a + b.amount, 0)
+  const net = (rev - costo) - gastos
+  const margin = rev > 0 ? ((net / rev) * 100).toFixed(1) : '0'
+  const ticket = filteredSales.length > 0 ? rev / filteredSales.length : 0
+  const goalPct = goal > 0 ? Math.min(100, (rev / goal) * 100) : 0
+
+  // ── Ventas tab ──
+  const [salePid, setSalePid] = useState('')
+  const [saleQty, setSaleQty] = useState(1)
+  const addSale = () => {
+    const p = products.find(x => x.id === salePid)
+    if (!p) { showToast('⚠️ Elegí un postre'); return }
+    setSales(prev => [...prev, {
+      id: Date.now().toString(), productId: p.id, productName: p.name,
+      quantity: saleQty, revenue: p.price * saleQty, cost: p.cost * saleQty,
+      profit: (p.price - p.cost) * saleQty, date: new Date().toISOString(),
+    }])
+    setSalePid(''); setSaleQty(1)
+    showToast('✓ Venta registrada')
   }
 
-  // Calculations
-  const totalRevenue = sales.reduce((s, v) => s + v.revenue, 0)
-  const totalProfit = sales.reduce((s, v) => s + v.profit, 0)
-  const totalExpenses = expenses.reduce((s, e) => s + e.amount, 0)
-  const netProfit = totalProfit - totalExpenses
-  const totalSalesCount = sales.reduce((s, v) => s + v.quantity, 0)
+  // ── Gastos tab ──
+  const [expType, setExpType] = useState<'Insumo' | 'General'>('Insumo')
+  const [expDesc, setExpDesc] = useState('')
+  const [expAmount, setExpAmount] = useState('')
+  const [expProd, setExpProd] = useState('')
+  const [expSearch, setExpSearch] = useState('')
+  const addExpense = () => {
+    const amount = parseFloat(expAmount)
+    if (!expDesc.trim() || isNaN(amount)) { showToast('⚠️ Completá descripción y monto'); return }
+    const rel = expType === 'Insumo' && expProd ? products.find(x => x.id === expProd)?.name || '' : ''
+    setExpenses(prev => [...prev, {
+      id: Date.now().toString(), description: expDesc.trim(), amount,
+      type: expType, relatedProduct: rel, date: new Date().toISOString(),
+    }])
+    setExpDesc(''); setExpAmount(''); setExpProd('')
+    showToast('✓ Gasto guardado')
+  }
 
-  // Today's stats
-  const today = new Date().toISOString().slice(0, 10)
-  const todaySales = sales.filter(s => s.date.slice(0, 10) === today)
-  const todayRevenue = todaySales.reduce((s, v) => s + v.revenue, 0)
-  const todayProfit = todaySales.reduce((s, v) => s + v.profit, 0)
+  // ── Catálogo tab ──
+  const [prodName, setProdName] = useState('')
+  const [prodCost, setProdCost] = useState('')
+  const [prodPrice, setProdPrice] = useState('')
+  const addProduct = () => {
+    const cost = parseFloat(prodCost), price = parseFloat(prodPrice)
+    if (!prodName.trim() || isNaN(cost) || isNaN(price)) { showToast('⚠️ Completá todos los campos'); return }
+    setProducts(prev => [...prev, {
+      id: Date.now().toString(), name: prodName.trim(), cost, price,
+      emoji: EMOJIS[products.length % EMOJIS.length],
+    }])
+    setProdName(''); setProdCost(''); setProdPrice('')
+    showToast('✓ Postre guardado en catálogo')
+  }
 
-  if (!loaded) return null
-  if (!authed) return <PinScreen onUnlock={() => setAuthed(true)} />
+  const exportCSV = () => {
+    const rows = [['Fecha','Producto','Cantidad','Ingresos','Costo','Ganancia'],
+      ...filteredSales.map(s => [new Date(s.date).toLocaleDateString('es-AR'),
+        s.productName, s.quantity, s.revenue.toFixed(2), s.cost.toFixed(2), s.profit.toFixed(2)])]
+    const csv = rows.map(r => r.join(',')).join('\n')
+    const blob = new Blob([csv], { type: 'text/csv' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a'); a.href = url; a.download = 'dulce-control.csv'; a.click()
+    showToast('📥 Reporte exportado')
+  }
 
-  const tabs: { key: Tab; label: string; icon: string }[] = [
-    { key: 'ventas', label: 'Ventas', icon: '💰' },
-    { key: 'gastos', label: 'Gastos', icon: '📉' },
-    { key: 'catalogo', label: 'Catálogo', icon: '📋' },
-    { key: 'resumen', label: 'Resumen', icon: '📊' },
-  ]
+  const displayedExpenses = filteredExpenses.filter(e =>
+    !expSearch || e.description.toLowerCase().includes(expSearch.toLowerCase()) ||
+    e.relatedProduct?.toLowerCase().includes(expSearch.toLowerCase())
+  )
+
+  const s = {
+    page: { minHeight: '100vh', background: '#fdf6f0', fontFamily: "'DM Sans', system-ui, sans-serif", color: '#3d1f1f' } as React.CSSProperties,
+    header: { background: 'white', borderBottom: '2px solid #fce8ed', padding: '14px 20px', position: 'sticky' as const, top: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: '0 4px 24px rgba(61,31,31,0.08)' },
+    main: { maxWidth: 900, margin: '0 auto', padding: '24px 16px 100px' },
+    card: { background: 'white', borderRadius: 24, border: '1px solid #fce8ed', boxShadow: '0 4px 24px rgba(61,31,31,0.08)', padding: 24 },
+    input: { width: '100%', padding: '11px 14px', border: '1.5px solid #f0dde5', borderRadius: 14, fontFamily: 'inherit', fontSize: 14, outline: 'none', background: '#fdf6f0', color: '#3d1f1f' } as React.CSSProperties,
+    btnPrimary: { width: '100%', padding: '13px', background: 'linear-gradient(135deg,#e8476a,#c0335a)', color: 'white', border: 'none', borderRadius: 14, fontFamily: 'inherit', fontSize: 12, fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '1.5px', cursor: 'pointer', boxShadow: '0 4px 16px rgba(232,71,106,0.3)' },
+    btnDark: { width: '100%', padding: '13px', background: '#3d1f1f', color: 'white', border: 'none', borderRadius: 14, fontFamily: 'inherit', fontSize: 12, fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '1.5px', cursor: 'pointer' },
+    btnIndigo: { width: '100%', padding: '13px', background: 'linear-gradient(135deg,#5c62d6,#3e44c0)', color: 'white', border: 'none', borderRadius: 14, fontFamily: 'inherit', fontSize: 12, fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '1.5px', cursor: 'pointer' },
+    label: { fontSize: 11, fontWeight: 700, color: '#e8476a', marginBottom: 6, textTransform: 'uppercase' as const, letterSpacing: '1px', display: 'block' },
+    rowItem: { background: 'white', border: '1px solid #f5e8ec', borderRadius: 18, padding: '13px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 },
+    delBtn: { background: 'none', border: 'none', cursor: 'pointer', color: '#ddd', fontSize: 16, padding: 6, borderRadius: 8 },
+  }
+
+  const tabStyle = (t: Tab) => ({
+    padding: '8px 16px', border: 'none', cursor: 'pointer', borderRadius: 10,
+    fontFamily: 'inherit', fontSize: 11, fontWeight: 700 as const,
+    textTransform: 'uppercase' as const, letterSpacing: '1px',
+    background: tab === t ? 'white' : 'transparent',
+    color: tab === t ? '#e8476a' : '#9ca3af',
+    boxShadow: tab === t ? '0 2px 12px rgba(61,31,31,0.1)' : 'none',
+    transition: 'all .2s',
+  })
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 dark:from-dark-900 dark:to-dark-800">
-      {/* Header */}
-      <div className="sticky top-0 z-40 bg-white/80 dark:bg-dark-800/80 backdrop-blur-sm border-b border-gray-200 dark:border-dark-600">
-        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">🧁</span>
-            <h1 className="text-xl font-bold text-gray-800 dark:text-white">Dulce Control</h1>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link href="/" className="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-              ← Inicio
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="text-sm text-red-400 hover:text-red-500 transition-colors"
-            >
-              Cerrar 🔒
-            </button>
+    <div style={s.page}>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;700&display=swap'); .dulce-input:focus { border-color: #e8476a !important; } .dulce-row:hover { border-color: #f5b8c8 !important; box-shadow: 0 4px 24px rgba(61,31,31,0.08); } .dulce-delbtn:hover { background: #fff0f0 !important; color: #e05555 !important; } .dulce-prod-card { background:white;border-radius:22px;padding:22px;border:1px solid #f0e0e8;box-shadow:0 4px 24px rgba(61,31,31,0.08);position:relative;transition:all .2s; } .dulce-prod-card:hover { box-shadow:0 8px 40px rgba(61,31,31,0.14);transform:translateY(-2px); } .dulce-toast { position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:#3d1f1f;color:white;padding:12px 24px;border-radius:40px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;z-index:999;white-space:nowrap;pointer-events:none; } .dulce-toast.show { opacity:1;transform:translateX(-50%) translateY(0); } .mobile-dulce { display:none; } @media(max-width:700px) { .desktop-dulce-tabs { display:none !important; } .mobile-dulce { display:flex; position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #fce8ed;padding:12px 0 18px;z-index:200;justify-content:space-around;box-shadow:0 -4px 20px rgba(61,31,31,0.08); } .mobile-dulce button { display:flex;flex-direction:column;align-items:center;gap:4px;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#ccc;padding:4px 16px; } .grid-split { grid-template-columns:1fr !important; } .grid-3c { grid-template-columns:1fr 1fr !important; } .grid-4c { grid-template-columns:1fr 1fr !important; } .hide-mobile { display:none !important; } }`}</style>
+
+      {/* HEADER */}
+      <header style={s.header}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{ width: 40, height: 40, background: 'linear-gradient(135deg,#e8476a,#c0335a)', borderRadius: 13, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, boxShadow: '0 4px 12px rgba(232,71,106,0.3)' }}>🧁</div>
+          <div>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 900, color: '#e8476a', lineHeight: 1 }}>Dulce Control</div>
+            <div style={{ fontSize: 9, fontWeight: 700, color: '#4caf84', textTransform: 'uppercase', letterSpacing: '1.5px', marginTop: 2 }}>💾 Solo en este dispositivo</div>
           </div>
         </div>
-      </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div className="desktop-dulce-tabs" style={{ display: 'flex', gap: 4, background: '#fdf6f0', borderRadius: 14, padding: 4, border: '1px solid #fce8ed' }}>
+            {(['ventas','gastos','catalogo','resumen'] as Tab[]).map(t => (
+              <button key={t} style={tabStyle(t)} onClick={() => setTab(t)}>
+                {t === 'ventas' ? '🛒 Ventas' : t === 'gastos' ? '🧾 Gastos' : t === 'catalogo' ? '🏷️ Catálogo' : '📊 Resumen'}
+              </button>
+            ))}
+          </div>
+          <button onClick={onLock} title="Cerrar sesión" style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, padding: 6, borderRadius: 8, color: '#ccc' }}>🔒</button>
+        </div>
+      </header>
 
-      {/* Quick stats bar */}
-      <div className="max-w-4xl mx-auto px-4 py-3">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-          <div className="bg-white dark:bg-dark-800 rounded-xl p-3 border border-gray-200 dark:border-dark-600 text-center">
-            <p className="text-xs text-gray-500 dark:text-gray-400">Hoy ventas</p>
-            <p className="text-lg font-bold text-green-500">{fmt(todayRevenue)}</p>
-          </div>
-          <div className="bg-white dark:bg-dark-800 rounded-xl p-3 border border-gray-200 dark:border-dark-600 text-center">
-            <p className="text-xs text-gray-500 dark:text-gray-400">Hoy ganancia</p>
-            <p className="text-lg font-bold text-blue-500">{fmt(todayProfit)}</p>
-          </div>
-          <div className="bg-white dark:bg-dark-800 rounded-xl p-3 border border-gray-200 dark:border-dark-600 text-center">
-            <p className="text-xs text-gray-500 dark:text-gray-400">Ganancia neta</p>
-            <p className={`text-lg font-bold ${netProfit >= 0 ? 'text-green-500' : 'text-red-500'}`}>{fmt(netProfit)}</p>
-          </div>
-          <div className="bg-white dark:bg-dark-800 rounded-xl p-3 border border-gray-200 dark:border-dark-600 text-center">
-            <p className="text-xs text-gray-500 dark:text-gray-400">Uds vendidas</p>
-            <p className="text-lg font-bold text-purple-500">{totalSalesCount}</p>
-          </div>
+      <main style={s.main}>
+        {/* FILTRO FECHA */}
+        <div style={{ background: 'white', borderRadius: 20, padding: '12px 18px', border: '1px solid #fce8ed', display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20, boxShadow: '0 4px 24px rgba(61,31,31,0.08)', flexWrap: 'wrap' }}>
+          <span style={{ fontSize: 11, fontWeight: 800, color: '#e8476a', whiteSpace: 'nowrap', textTransform: 'uppercase', letterSpacing: '1px' }}>📅 Periodo:</span>
+          <input type="date" className="dulce-input" value={dateStart} onChange={e => setDateStart(e.target.value)} style={{ ...s.input, width: 'auto', padding: '6px 12px' }} />
+          <span style={{ color: '#ddd' }}>→</span>
+          <input type="date" className="dulce-input" value={dateEnd} onChange={e => setDateEnd(e.target.value)} style={{ ...s.input, width: 'auto', padding: '6px 12px' }} />
+          {(dateStart || dateEnd) && (
+            <button onClick={() => { setDateStart(''); setDateEnd('') }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#e8476a', fontSize: 18 }}>✕</button>
+          )}
         </div>
 
-        {/* Goal progress */}
-        {goal > 0 && (
-          <div className="bg-white dark:bg-dark-800 rounded-xl p-3 border border-gray-200 dark:border-dark-600 mb-4">
-            <div className="flex justify-between text-sm mb-1">
-              <span className="text-gray-600 dark:text-gray-400">Meta mensual</span>
-              <span className="font-medium text-gray-800 dark:text-white">{fmt(totalRevenue)} / {fmt(goal)}</span>
-            </div>
-            <div className="h-3 bg-gray-200 dark:bg-dark-600 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-pink-400 to-purple-500 rounded-full transition-all duration-500"
-                style={{ width: `${Math.min(100, (totalRevenue / goal) * 100)}%` }}
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Tabs */}
-        <div className="flex gap-1 bg-white dark:bg-dark-800 rounded-xl p-1 border border-gray-200 dark:border-dark-600 mb-4">
-          {tabs.map(t => (
-            <button
-              key={t.key}
-              onClick={() => setTab(t.key)}
-              className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
-                tab === t.key
-                  ? 'bg-pink-500 text-white'
-                  : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-700'
-              }`}
-            >
-              <span className="mr-1">{t.icon}</span>
-              <span className="hidden sm:inline">{t.label}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* ── Tab: Ventas ───────────────────────────────── */}
+        {/* ── VENTAS ── */}
         {tab === 'ventas' && (
-          <div>
-            <SaleForm products={products} onAdd={addSale} />
-            {sales.length === 0 ? (
-              <p className="text-center text-gray-400 dark:text-gray-500 py-8">No hay ventas registradas</p>
-            ) : (
-              <div className="space-y-2">
-                {sales.map(s => (
-                  <div key={s.id} className="bg-white dark:bg-dark-800 rounded-xl p-3 border border-gray-200 dark:border-dark-600 flex items-center justify-between">
-                    <div>
-                      <p className="font-medium text-gray-800 dark:text-white">
-                        {products.find(p => p.id === s.productId)?.emoji || '🧁'} {s.productName} x{s.quantity}
-                      </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
-                        {new Date(s.date).toLocaleString('es-MX')} — Ganancia: {fmt(s.profit)}
-                      </p>
+          <div className="grid-split" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 20 }}>
+            <div style={{ ...s.card, height: 'fit-content' }}>
+              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 15, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, marginBottom: 18 }}>
+                <div style={{ width: 30, height: 30, background: '#fce8ed', borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>🛒</div>
+                Nueva Venta
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <select className="dulce-input" value={salePid} onChange={e => setSalePid(e.target.value)} style={s.input}>
+                  <option value="">Elegir postre...</option>
+                  {products.map(p => <option key={p.id} value={p.id}>{p.name} ({fmt(p.price)})</option>)}
+                </select>
+                <input type="number" className="dulce-input" value={saleQty} min={1} onChange={e => setSaleQty(parseInt(e.target.value) || 1)} style={s.input} placeholder="Cantidad" />
+                <button style={s.btnPrimary} onClick={addSale}>✓ Registrar Venta</button>
+              </div>
+              {salePid && (() => {
+                const p = products.find(x => x.id === salePid)
+                if (!p) return null
+                return (
+                  <div style={{ marginTop: 16, padding: '12px 14px', background: '#fdf6f0', borderRadius: 14, border: '1px solid #fce8ed' }}>
+                    <div style={{ fontSize: 12, color: '#9ca3af', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 6 }}>Previsualización</div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13 }}>
+                      <span style={{ color: '#6b7280' }}>Ingreso</span>
+                      <span style={{ fontWeight: 700, color: '#5c62d6' }}>{fmt(p.price * saleQty)}</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <span className="font-bold text-green-500">{fmt(s.revenue)}</span>
-                      <button onClick={() => deleteSale(s.id)} className="text-red-400 hover:text-red-500 text-sm">✕</button>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginTop: 4 }}>
+                      <span style={{ color: '#6b7280' }}>Ganancia</span>
+                      <span style={{ fontWeight: 700, color: '#4caf84' }}>{fmt((p.price - p.cost) * saleQty)}</span>
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* ── Tab: Gastos ───────────────────────────────── */}
-        {tab === 'gastos' && (
-          <div>
-            <ExpenseForm products={products} onAdd={addExpense} />
-            {expenses.length === 0 ? (
-              <p className="text-center text-gray-400 dark:text-gray-500 py-8">No hay gastos registrados</p>
-            ) : (
-              <div className="space-y-2">
-                {expenses.map(e => (
-                  <div key={e.id} className="bg-white dark:bg-dark-800 rounded-xl p-3 border border-gray-200 dark:border-dark-600 flex items-center justify-between">
-                    <div>
-                      <p className="font-medium text-gray-800 dark:text-white">{e.description}</p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
-                        {e.type} — {new Date(e.date).toLocaleString('es-MX')}
-                        {e.relatedProduct && ` — ${products.find(p => p.id === e.relatedProduct)?.name || ''}`}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className="font-bold text-red-500">-{fmt(e.amount)}</span>
-                      <button onClick={() => deleteExpense(e.id)} className="text-red-400 hover:text-red-500 text-sm">✕</button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* ── Tab: Catálogo ─────────────────────────────── */}
-        {tab === 'catalogo' && (
-          <div>
-            <ProductForm onAdd={addProduct} />
-            {products.length === 0 ? (
-              <p className="text-center text-gray-400 dark:text-gray-500 py-8">Agrega tu primer producto</p>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {products.map(p => (
-                  <div key={p.id} className="bg-white dark:bg-dark-800 rounded-xl p-4 border border-gray-200 dark:border-dark-600">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-2xl">{p.emoji}</span>
-                      <button onClick={() => deleteProduct(p.id)} className="text-red-400 hover:text-red-500 text-sm">✕</button>
-                    </div>
-                    <h4 className="font-semibold text-gray-800 dark:text-white">{p.name}</h4>
-                    <div className="flex justify-between text-sm mt-1">
-                      <span className="text-gray-500 dark:text-gray-400">Costo: {fmt(p.cost)}</span>
-                      <span className="text-green-500 font-medium">Venta: {fmt(p.price)}</span>
-                    </div>
-                    <p className="text-xs text-purple-500 mt-1">
-                      Margen: {fmt(p.price - p.cost)} ({((p.price - p.cost) / p.price * 100).toFixed(0)}%)
-                    </p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* ── Tab: Resumen ──────────────────────────────── */}
-        {tab === 'resumen' && (
-          <div className="space-y-4">
-            {/* Goal setting */}
-            <div className="bg-white dark:bg-dark-800 rounded-xl p-4 border border-gray-200 dark:border-dark-600">
-              <h3 className="font-semibold text-gray-800 dark:text-white mb-3">🎯 Meta mensual</h3>
-              <div className="flex gap-3">
-                <input
-                  type="number"
-                  min={0}
-                  step={100}
-                  value={goal || ''}
-                  onChange={e => setGoal(parseFloat(e.target.value) || 0)}
-                  placeholder="Meta de ventas ($)"
-                  className="flex-1 p-2 rounded-lg border border-gray-200 dark:border-dark-500 bg-gray-50 dark:bg-dark-700 text-gray-800 dark:text-white"
-                />
-              </div>
+                )
+              })()}
             </div>
-
-            {/* Summary cards */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-white dark:bg-dark-800 rounded-xl p-4 border border-gray-200 dark:border-dark-600">
-                <p className="text-sm text-gray-500 dark:text-gray-400">Total ingresos</p>
-                <p className="text-2xl font-bold text-green-500">{fmt(totalRevenue)}</p>
-              </div>
-              <div className="bg-white dark:bg-dark-800 rounded-xl p-4 border border-gray-200 dark:border-dark-600">
-                <p className="text-sm text-gray-500 dark:text-gray-400">Ganancia bruta</p>
-                <p className="text-2xl font-bold text-blue-500">{fmt(totalProfit)}</p>
-              </div>
-              <div className="bg-white dark:bg-dark-800 rounded-xl p-4 border border-gray-200 dark:border-dark-600">
-                <p className="text-sm text-gray-500 dark:text-gray-400">Total gastos</p>
-                <p className="text-2xl font-bold text-red-500">{fmt(totalExpenses)}</p>
-              </div>
-              <div className="bg-white dark:bg-dark-800 rounded-xl p-4 border border-gray-200 dark:border-dark-600">
-                <p className="text-sm text-gray-500 dark:text-gray-400">Ganancia neta</p>
-                <p className={`text-2xl font-bold ${netProfit >= 0 ? 'text-green-500' : 'text-red-500'}`}>{fmt(netProfit)}</p>
-              </div>
-            </div>
-
-            {/* Top products */}
-            {sales.length > 0 && (
-              <div className="bg-white dark:bg-dark-800 rounded-xl p-4 border border-gray-200 dark:border-dark-600">
-                <h3 className="font-semibold text-gray-800 dark:text-white mb-3">🏆 Productos más vendidos</h3>
-                {(() => {
-                  const grouped = sales.reduce<Record<string, { name: string; qty: number; revenue: number; profit: number }>>((acc, s) => {
-                    if (!acc[s.productId]) acc[s.productId] = { name: s.productName, qty: 0, revenue: 0, profit: 0 }
-                    acc[s.productId].qty += s.quantity
-                    acc[s.productId].revenue += s.revenue
-                    acc[s.productId].profit += s.profit
-                    return acc
-                  }, {})
-                  return Object.entries(grouped)
-                    .sort((a, b) => b[1].qty - a[1].qty)
-                    .slice(0, 5)
-                    .map(([id, data]) => (
-                      <div key={id} className="flex justify-between py-2 border-b border-gray-100 dark:border-dark-600 last:border-0">
-                        <span className="text-gray-800 dark:text-white">
-                          {products.find(p => p.id === id)?.emoji || '🧁'} {data.name}
-                        </span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                          {data.qty} uds — {fmt(data.revenue)} — Gan: {fmt(data.profit)}
-                        </span>
+            <div>
+              {filteredSales.length === 0
+                ? <div style={{ textAlign: 'center', padding: '48px 20px', color: '#ccc' }}><div style={{ fontSize: 48, marginBottom: 12 }}>🍰</div><p style={{ fontSize: 14 }}>Sin ventas en este periodo</p></div>
+                : filteredSales.map(s2 => (
+                  <div key={s2.id} className="dulce-row" style={s.rowItem}>
+                    <div>
+                      <div style={{ fontSize: 15, fontWeight: 700 }}>{s2.productName} <span style={{ background: '#fce8ed', color: '#e8476a', fontSize: 9, fontWeight: 800, padding: '2px 7px', borderRadius: 20, textTransform: 'uppercase', letterSpacing: '0.8px', marginLeft: 4 }}>×{s2.quantity}</span></div>
+                      <div style={{ fontSize: 10, fontWeight: 600, color: '#aaa', textTransform: 'uppercase', letterSpacing: '1px', marginTop: 3 }}>{new Date(s2.date).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                      <div style={{ textAlign: 'right' }}>
+                        <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 18, fontWeight: 900, color: '#4caf84' }}>+{fmt(s2.profit)}</div>
+                        <div style={{ fontSize: 9, color: '#bbb', fontWeight: 800, textTransform: 'uppercase' }}>ganancia</div>
                       </div>
-                    ))
-                })()}
-              </div>
-            )}
+                      <button className="dulce-delbtn" style={s.delBtn} onClick={() => { setSales(p => p.filter(x => x.id !== s2.id)); showToast('🗑 Venta eliminada') }}>✕</button>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        )}
 
-            {/* Notes */}
-            <div className="bg-white dark:bg-dark-800 rounded-xl p-4 border border-gray-200 dark:border-dark-600">
-              <h3 className="font-semibold text-gray-800 dark:text-white mb-3">📝 Notas</h3>
+        {/* ── GASTOS ── */}
+        {tab === 'gastos' && (
+          <div className="grid-split" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 20 }}>
+            <div style={{ ...s.card, height: 'fit-content' }}>
+              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 15, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, marginBottom: 18 }}>
+                <div style={{ width: 30, height: 30, background: '#fdf3e3', borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>🧾</div>
+                Registrar Gasto
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <div style={{ display: 'flex', background: '#fdf6f0', borderRadius: 12, padding: 4, border: '1px solid #fce8ed' }}>
+                  {(['Insumo', 'General'] as const).map(t => (
+                    <button key={t} onClick={() => setExpType(t)} style={{ flex: 1, padding: 8, border: 'none', cursor: 'pointer', borderRadius: 9, fontFamily: 'inherit', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', background: expType === t ? 'white' : 'transparent', color: expType === t ? '#e8476a' : '#9ca3af', transition: 'all .2s' }}>
+                      {t}
+                    </button>
+                  ))}
+                </div>
+                <input type="text" className="dulce-input" value={expDesc} onChange={e => setExpDesc(e.target.value)} style={s.input} placeholder="¿Qué compraste? Ej: 5kg Harina" />
+                {expType === 'Insumo' && (
+                  <select className="dulce-input" value={expProd} onChange={e => setExpProd(e.target.value)} style={s.input}>
+                    <option value="">¿Para qué postre? (Opcional)</option>
+                    {products.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+                  </select>
+                )}
+                <input type="number" className="dulce-input" value={expAmount} onChange={e => setExpAmount(e.target.value)} style={s.input} placeholder="Monto Total $" />
+                <button style={s.btnDark} onClick={addExpense}>↓ Guardar Gasto</button>
+              </div>
+            </div>
+            <div>
+              <div style={{ position: 'relative', marginBottom: 14 }}>
+                <span style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: '#ccc', pointerEvents: 'none' }}>🔍</span>
+                <input type="text" className="dulce-input" value={expSearch} onChange={e => setExpSearch(e.target.value)} style={{ ...s.input, paddingLeft: 42 }} placeholder="Buscar gastos..." />
+              </div>
+              {displayedExpenses.length === 0
+                ? <div style={{ textAlign: 'center', padding: '48px 20px', color: '#ccc' }}><div style={{ fontSize: 48, marginBottom: 12 }}>💸</div><p style={{ fontSize: 14 }}>Sin gastos en este periodo</p></div>
+                : displayedExpenses.map(e2 => (
+                  <div key={e2.id} className="dulce-row" style={s.rowItem}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                      <div style={{ width: 40, height: 40, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, background: e2.type === 'Insumo' ? '#eef0fd' : '#fdf3e3', flexShrink: 0 }}>
+                        {e2.type === 'Insumo' ? '📦' : '🧾'}
+                      </div>
+                      <div>
+                        <div style={{ fontSize: 15, fontWeight: 700 }}>{e2.description}</div>
+                        <div style={{ fontSize: 10, fontWeight: 600, color: '#aaa', textTransform: 'uppercase', letterSpacing: '1px', marginTop: 3 }}>
+                          {new Date(e2.date).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' })}
+                          {e2.relatedProduct && <span style={{ background: '#fce8ed', color: '#e8476a', padding: '2px 7px', borderRadius: 20, marginLeft: 6, fontSize: 9 }}>Para: {e2.relatedProduct}</span>}
+                        </div>
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                      <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 18, fontWeight: 900, color: '#e05555' }}>−{fmt(e2.amount)}</div>
+                      <button className="dulce-delbtn" style={s.delBtn} onClick={() => { setExpenses(p => p.filter(x => x.id !== e2.id)); showToast('🗑 Gasto eliminado') }}>✕</button>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        )}
+
+        {/* ── CATÁLOGO ── */}
+        {tab === 'catalogo' && (
+          <>
+            <div style={{ ...s.card, marginBottom: 20 }}>
+              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 15, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, marginBottom: 18 }}>
+                <div style={{ width: 30, height: 30, background: '#eef0fd', borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>🏷️</div>
+                Agregar Postre
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 12 }}>
+                <input type="text" className="dulce-input" value={prodName} onChange={e => setProdName(e.target.value)} style={s.input} placeholder="Nombre del postre" />
+                <input type="number" className="dulce-input" value={prodCost} onChange={e => setProdCost(e.target.value)} style={s.input} placeholder="Costo $" />
+                <input type="number" className="dulce-input" value={prodPrice} onChange={e => setProdPrice(e.target.value)} style={s.input} placeholder="Precio Venta $" />
+                <button style={{ ...s.btnIndigo, gridColumn: 'span 3' }} onClick={addProduct}>+ Guardar en Catálogo</button>
+              </div>
+            </div>
+            <div className="grid-3c" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
+              {products.length === 0
+                ? <div style={{ textAlign: 'center', padding: '48px 20px', color: '#ccc', gridColumn: 'span 3' }}><div style={{ fontSize: 48, marginBottom: 12 }}>🍩</div><p style={{ fontSize: 14 }}>Agrega tu primer postre</p></div>
+                : products.map(p => (
+                  <div key={p.id} className="dulce-prod-card">
+                    <button className="dulce-delbtn" style={{ ...s.delBtn, position: 'absolute', top: 14, right: 14 }} onClick={() => { setProducts(prev => prev.filter(x => x.id !== p.id)); showToast('🗑 Postre eliminado') }}>✕</button>
+                    <div style={{ fontSize: 32 }}>{p.emoji}</div>
+                    <h4 style={{ fontFamily: "'Playfair Display', serif", fontSize: 17, fontWeight: 700, margin: '10px 0 0' }}>{p.name}</h4>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 14, paddingTop: 14, borderTop: '1px solid #f5e8ec' }}>
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: 9, fontWeight: 800, textTransform: 'uppercase', color: '#aaa', letterSpacing: '1px' }}>Costo</div>
+                        <div style={{ fontSize: 16, fontWeight: 900, color: '#f0a040' }}>{fmt(p.cost)}</div>
+                      </div>
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: 9, fontWeight: 800, textTransform: 'uppercase', color: '#aaa', letterSpacing: '1px' }}>Venta</div>
+                        <div style={{ fontSize: 16, fontWeight: 900, color: '#5c62d6' }}>{fmt(p.price)}</div>
+                      </div>
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: 9, fontWeight: 800, textTransform: 'uppercase', color: '#aaa', letterSpacing: '1px' }}>Utilidad</div>
+                        <div style={{ fontSize: 16, fontWeight: 900, color: '#4caf84' }}>{fmt(p.price - p.cost)}</div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </>
+        )}
+
+        {/* ── RESUMEN ── */}
+        {tab === 'resumen' && (
+          <>
+            {/* Stats */}
+            <div className="grid-4c" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14, marginBottom: 20 }}>
+              {[
+                { label: 'Ingresos',    val: fmt(rev),   color: '#5c62d6' },
+                { label: 'Costo Prod.', val: fmt(costo), color: '#f0a040' },
+                { label: 'Gastos',      val: fmt(gastos),color: '#e05555' },
+                { label: 'Ganancia',    val: fmt(net),   highlight: true },
+              ].map(c => (
+                <div key={c.label} style={{ background: c.highlight ? 'linear-gradient(135deg,#4caf84,#38a06c)' : 'white', borderRadius: 22, padding: 20, textAlign: 'center', border: c.highlight ? 'none' : '1px solid #fce8ed', boxShadow: '0 4px 24px rgba(61,31,31,0.08)' }}>
+                  <div style={{ fontSize: 9, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '2px', color: c.highlight ? 'rgba(255,255,255,0.7)' : '#aaa' }}>{c.label}</div>
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, fontWeight: 900, marginTop: 4, color: c.highlight ? 'white' : c.color }}>{c.val}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Meta mensual */}
+            <div style={{ ...s.card, marginBottom: 20 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 15, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <div style={{ width: 30, height: 30, background: '#e8f7f0', borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>🎯</div>
+                  Meta de Ingresos
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ fontSize: 12, color: '#9ca3af' }}>$</span>
+                  <input type="number" className="dulce-input" value={goal || ''} onChange={e => setGoal(parseFloat(e.target.value) || 0)} style={{ ...s.input, width: 120, padding: '6px 12px', textAlign: 'right' }} placeholder="0" />
+                </div>
+              </div>
+              {goal > 0 && (
+                <>
+                  <div style={{ height: 14, background: '#f5e8ec', borderRadius: 20, overflow: 'hidden', marginBottom: 8 }}>
+                    <div style={{ height: '100%', borderRadius: 20, background: goalPct >= 100 ? 'linear-gradient(90deg,#4caf84,#38a06c)' : 'linear-gradient(90deg,#e8476a,#c0335a)', width: `${goalPct}%`, transition: 'width .6s ease' }} />
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
+                    <span style={{ color: goalPct >= 100 ? '#4caf84' : '#e8476a', fontWeight: 700 }}>{goalPct.toFixed(0)}% alcanzado</span>
+                    <span style={{ color: '#9ca3af' }}>Falta: {fmt(Math.max(0, goal - rev))}</span>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Análisis */}
+            <div style={{ ...s.card, marginBottom: 20 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 15, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <div style={{ width: 30, height: 30, background: '#fce8ed', borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>📊</div>
+                  Análisis del Periodo
+                </div>
+                <button onClick={exportCSV} style={{ background: '#fce8ed', color: '#e8476a', border: 'none', borderRadius: 12, padding: '8px 14px', fontFamily: 'inherit', fontSize: 12, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>⬇ Exportar CSV</button>
+              </div>
+              {/* Barra */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, fontWeight: 700, color: '#bbb', textTransform: 'uppercase', letterSpacing: '1px', margin: '0 0 8px' }}>
+                <span>◼ Prod.</span><span>◼ Gastos</span><span>◼ Ganancia</span>
+              </div>
+              <div style={{ height: 52, borderRadius: 14, overflow: 'hidden', display: 'flex', background: '#f5f5f5', marginBottom: 20 }}>
+                {rev > 0 && <div style={{ width: `${Math.max(4, (costo/rev)*100)}%`, background: '#f0a040', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 900, color: 'white', textTransform: 'uppercase' }}>PROD</div>}
+                {rev > 0 && <div style={{ width: `${Math.max(4, (gastos/rev)*100)}%`, background: '#e05555', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 900, color: 'white', textTransform: 'uppercase' }}>GTOS</div>}
+                <div style={{ flex: 1, background: '#4caf84', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 900, color: 'white', textTransform: 'uppercase' }}>UTIL</div>
+              </div>
+              <div className="grid-4c" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 0, textAlign: 'center', borderTop: '1px solid #f5e8ec', paddingTop: 16 }}>
+                {[
+                  { val: filteredSales.length, label: 'Postres Vendidos' },
+                  { val: filteredExpenses.length, label: 'Gastos Registrados' },
+                  { val: margin + '%', label: 'Margen Neto' },
+                  { val: fmt(ticket), label: 'Ticket Promedio' },
+                ].map(k => (
+                  <div key={k.label}>
+                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 900 }}>{k.val}</div>
+                    <div style={{ fontSize: 9, fontWeight: 800, textTransform: 'uppercase', color: '#aaa', letterSpacing: '1px', marginTop: 2 }}>{k.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Notas */}
+            <div style={s.card}>
+              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 15, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+                <div style={{ width: 30, height: 30, background: '#fdf3e3', borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>📝</div>
+                Notas Rápidas
+              </div>
               <textarea
                 value={notes}
                 onChange={e => setNotes(e.target.value)}
-                placeholder="Apuntes, ideas, recordatorios..."
-                rows={4}
-                className="w-full p-3 rounded-lg border border-gray-200 dark:border-dark-500 bg-gray-50 dark:bg-dark-700 text-gray-800 dark:text-white resize-none"
+                style={{ ...s.input, minHeight: 120, resize: 'vertical', lineHeight: 1.6 } as React.CSSProperties}
+                placeholder="Anotá pedidos pendientes, ideas de nuevos postres, recordatorios..."
+                className="dulce-input"
               />
+              <div style={{ fontSize: 11, color: '#bbb', marginTop: 8, textAlign: 'right' }}>Guardado automáticamente ✓</div>
             </div>
-
-            {/* Danger zone */}
-            <div className="bg-red-50 dark:bg-red-900/20 rounded-xl p-4 border border-red-200 dark:border-red-800">
-              <h3 className="font-semibold text-red-600 dark:text-red-400 mb-3">⚠️ Zona peligrosa</h3>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => { if (confirm('Borrar TODAS las ventas?')) setSales([]) }}
-                  className="px-3 py-1.5 rounded-lg bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 text-sm hover:bg-red-200 dark:hover:bg-red-900/60"
-                >
-                  Borrar ventas
-                </button>
-                <button
-                  onClick={() => { if (confirm('Borrar TODOS los gastos?')) setExpenses([]) }}
-                  className="px-3 py-1.5 rounded-lg bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 text-sm hover:bg-red-200 dark:hover:bg-red-900/60"
-                >
-                  Borrar gastos
-                </button>
-                <button
-                  onClick={() => { if (confirm('Borrar TODO? (productos, ventas, gastos, notas)')) { setProducts([]); setSales([]); setExpenses([]); setNotes(''); setGoal(0) } }}
-                  className="px-3 py-1.5 rounded-lg bg-red-500 text-white text-sm hover:bg-red-600"
-                >
-                  Resetear todo
-                </button>
-              </div>
-            </div>
-          </div>
+          </>
         )}
+      </main>
 
-        <div className="h-8" />
-      </div>
+      {/* MOBILE NAV */}
+      <nav className="mobile-dulce">
+        {(['ventas','gastos','catalogo','resumen'] as Tab[]).map(t => (
+          <button key={t} onClick={() => setTab(t)} style={{ color: tab === t ? '#e8476a' : '#ccc' }}>
+            <span style={{ fontSize: 22 }}>{t === 'ventas' ? '🛒' : t === 'gastos' ? '🧾' : t === 'catalogo' ? '🏷️' : '📊'}</span>
+            {t === 'ventas' ? 'Ventas' : t === 'gastos' ? 'Gastos' : t === 'catalogo' ? 'Catálogo' : 'Resumen'}
+          </button>
+        ))}
+      </nav>
+
+      {/* TOAST */}
+      <div className={`dulce-toast${toast ? ' show' : ''}`}>{toast}</div>
     </div>
   )
 }
